@@ -1,453 +1,893 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Tập Sinh Học 12 - GDTX</title>
-    <style>
-        :root {
-            --primary: #2e7d32;
-            --primary-light: #4caf50;
-            --secondary: #0288d1;
-            --bg: #f4f6f8;
-            --card-bg: #ffffff;
-            --text: #333333;
-            --text-light: #666666;
-            --success: #388e3c;
-            --error: #d32f2f;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRỢ LÝ HỌC TẬP SINH HỌC 12 – GDTX</title>
+  <style>
+    /* RESET & VARS */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+    :root {
+      --primary: #2e7d32;
+      --primary-dark: #1b5e20;
+      --secondary: #0288d1;
+      --accent: #f57c00;
+      --bg-light: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-dark: #2c3e50;
+      --text-muted: #666666;
+      --border: #e0e0e0;
+      --success: #388e3c;
+      --danger: #d32f2f;
+      --warning: #fbc02d;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; padding-bottom: 40px; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
+    /* HEADER */
+    header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; text-align: center; padding: 25px 15px; }
+    header h1 { font-size: 1.8rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    header p { font-size: 1rem; opacity: 0.95; font-weight: 300; }
 
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+    /* NAV */
+    nav { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); sticky: top: 0; position: sticky; top: 0; z-index: 100; }
+    .nav-container { display: flex; overflow-x: auto; max-width: 1100px; margin: 0 auto; white-space: nowrap; scrollbar-width: none; }
+    .nav-container::-webkit-scrollbar { display: none; }
+    .nav-btn { flex: 1; min-width: 100px; text-align: center; padding: 14px 10px; background: none; border: none; border-bottom: 3px solid transparent; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+    .nav-btn:hover { background-color: #f0f4f1; color: var(--primary); }
+    .nav-btn.active { border-bottom-color: var(--primary); color: var(--primary); background-color: #e8f5e9; }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    /* CONTAINER */
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        nav button {
-            background: none;
-            border: none;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    /* CARDS & UI COMPONENTS */
+    .card { background: var(--card-bg); border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+    .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s, transform 0.1s; }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background-color: var(--primary); color: #fff; }
+    .btn-primary:hover { background-color: var(--primary-dark); }
+    .btn-secondary { background-color: var(--secondary); color: #fff; }
+    .btn-outline { background-color: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background-color: var(--primary); color: #fff; }
+    .btn-block { display: block; width: 100%; margin-top: 10px; }
 
-        nav button:hover, nav button.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
+    /* HOME GRID */
+    .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 25px 0; }
+    .grid-btn { padding: 20px 10px; background: #fff; border: 2px solid var(--border); border-radius: 12px; font-size: 1.1rem; font-weight: bold; color: var(--primary-dark); cursor: pointer; text-align: center; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+    .grid-btn:hover { border-color: var(--primary); background: #e8f5e9; transform: translateY(-3px); }
 
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
+    .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+    .step-box { background: #fff; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .step-box h4 { color: var(--secondary); margin-bottom: 5px; }
 
-        .tab-content {
-            display: none;
-        }
+    /* SEARCH & KNOWLEDGE */
+    .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+    .search-box input { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; }
+    .topic-list { display: flex; flex-direction: column; gap: 15px; }
+    .topic-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 15px; }
+    .topic-card h3 { color: var(--primary); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .topic-card p { font-size: 0.95rem; color: #555; margin-bottom: 10px; }
+    .topic-detail { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border); background-color: #fafafa; padding: 15px; border-radius: 6px; }
+    .topic-detail.active { display: block; }
+    .tag { display: inline-block; background: #e0f2f1; color: #00695c; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-right: 5px; }
 
-        .tab-content.active {
-            display: block;
-        }
+    /* QUIZ & EXAM */
+    .quiz-config { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid var(--border); }
+    .config-group { display: flex; align-items: center; gap: 8px; }
+    .config-group select { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); font-size: 1rem; }
 
-        .card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+    .timer-badge { background: #fff3e0; color: #e65100; font-weight: bold; padding: 8px 15px; border-radius: 20px; border: 1px solid #ffe0b2; display: inline-flex; align-items: center; gap: 5px; float: right; }
+    
+    .question-box { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; }
+    .q-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; color: var(--text-dark); }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn { background: #f8f9fa; border: 1px solid var(--border); padding: 12px 15px; border-radius: 6px; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1rem; display: flex; align-items: center; }
+    .option-btn:hover { background: #e9ecef; }
+    .option-btn.selected { background: #e8f5e9; border-color: var(--primary); font-weight: bold; color: var(--primary-dark); }
 
-        h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 0.5rem;
-        }
+    .nav-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
 
-        .question-box {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
+    /* TRUE/FALSE & SHORT ANSWER */
+    .tf-item { background: #f9f9f9; padding: 12px; border-radius: 6px; margin-bottom: 10px; border-left: 3px solid var(--secondary); }
+    .tf-options { display: flex; gap: 15px; margin-top: 8px; }
+    .tf-label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+    .short-item { margin-bottom: 20px; padding: 15px; background: #fff; border: 1px solid var(--border); border-radius: 8px; }
+    .short-item input[type="text"] { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px; font-size: 1rem; }
 
-        .options label {
-            display: block;
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 1px solid #ddd;
-            transition: background 0.2s;
-        }
+    /* RESULT & EXPLANATION */
+    .result-summary { text-align: center; padding: 20px; }
+    .score-circle { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 15px auto; }
+    .feedback-box { padding: 15px; border-radius: 8px; margin: 15px 0; font-weight: 500; }
+    
+    .review-item { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; text-align: left; }
+    .review-item.correct { border-left: 5px solid var(--success); }
+    .review-item.incorrect { border-left: 5px solid var(--danger); }
+    .explanation { background: #eef6fc; padding: 10px; border-radius: 6px; font-size: 0.9rem; margin-top: 10px; color: #0c5460; }
 
-        .options label:hover {
-            background-color: #f0f0f0;
-        }
+    /* FOOTER */
+    footer { background: #2c3e50; color: #fff; padding: 20px; text-align: center; margin-top: 40px; font-size: 0.9rem; }
+    footer p { margin: 5px 0; opacity: 0.8; }
 
-        .options input[type="radio"], .options input[type="checkbox"] {
-            margin-right: 0.5rem;
-        }
-
-        .tf-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0.5rem;
-        }
-
-        .tf-table th, .tf-table td {
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-            text-align: center;
-        }
-
-        .tf-table td:first-child {
-            text-align: left;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-        }
-
-        .btn-submit, .btn-reset {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .btn-reset {
-            background-color: var(--secondary);
-            display: none;
-        }
-
-        .result-box {
-            display: none;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .explanation {
-            display: none;
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            background-color: #e8f5e9;
-            border-left: 4px solid var(--primary);
-            font-size: 0.9rem;
-        }
-
-        .correct { color: var(--success); font-weight: bold; }
-        .incorrect { color: var(--error); font-weight: bold; }
-
-        @media (max-width: 600px) {
-            nav { flex-direction: column; }
-            nav button { width: 100%; text-align: center; padding: 0.75rem; }
-        }
-    </style>
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.4rem; }
+      .nav-btn { font-size: 0.85rem; padding: 10px 6px; }
+      .grid-menu { grid-template-columns: 1fr; }
+      .quiz-config { flex-direction: column; align-items: stretch; }
+      .timer-badge { float: none; display: inline-block; text-align: center; margin-bottom: 10px; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>ÔN TẬP SINH HỌC 12 - GDTX</h1>
-        <p>Hệ thống kiến thức & Luyện tập trắc nghiệm hiệu quả</p>
-    </header>
+  <!-- HEADER -->
+  <header>
+    <h1>TRỢ LÝ HỌC TẬP SINH HỌC 12 – GDTX</h1>
+    <p>Học tập chủ động – Luyện tập hiệu quả – Chinh phục kỳ thi</p>
+  </header>
 
-    <nav>
-        <button class="nav-btn active" onclick="switchTab('home')">Trang Chủ</button>
-        <button class="nav-btn" onclick="switchTab('theory')">Kiến Thức Trọng Tâm</button>
-        <button class="nav-btn" onclick="switchTab('quiz')">Luyện Tập Trắc Nghiệm</button>
-    </nav>
-
-    <div class="container">
-        <!-- TRANG CHỦ -->
-        <div id="home" class="tab-content active">
-            <div class="card">
-                <h2>Chào mừng các học viên GDTX!</h2>
-                <p>Website được thiết kế nhằm hỗ trợ học viên hệ GDTX ôn tập kiến thức Sinh học 12 nhanh chóng, nắm chắc trọng tâm và tự luyện tập làm bài trắc nghiệm.</p>
-                <br>
-                <h3>Hướng dẫn học tập:</h3>
-                <ul>
-                    <li><strong>Bước 1:</strong> Chọn tab <b>"Kiến Thức Trọng Tâm"</b> để đọc và ghi nhớ các khái niệm cốt lõi.</li>
-                    <li><strong>Bước 2:</strong> Chuyển sang tab <b>"Luyện Tập Trắc Nghiệm"</b> để hoàn thành bộ câu hỏi.</li>
-                    <li><strong>Bước 3:</strong> Nhấn <b>"Nộp bài"</b> để xem điểm, kiểm tra đáp án và đọc giải thích chi tiết.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- KIẾN THỨC TRỌNG TÂM -->
-        <div id="theory" class="tab-content">
-            <div class="card">
-                <h2>1. Gen, Mã Di Truyền và Nhân Đôi DNA</h2>
-                <p><b>- Gen:</b> Là một đoạn của phân tử DNA mang thông tin mã hóa cho một sản phẩm xác định (chuỗi polypeptide hoặc RNA).</p>
-                <p><b>- Mã di truyền:</b> Là mã bộ ba (3 nucleotide kế tiếp nhau mã hóa cho 1 amino acid). Có 64 bộ ba: 61 bộ ba mã hóa, 3 bộ ba kết thúc (UAA, UAG, UGA). Bộ ba mở đầu là AUG (mã hóa Metionin ở sinh vật nhân thực).</p>
-                <p><b>- Nhân đôi DNA:</b> Diễn ra theo nguyên tắc bổ sung (A-T, G-C) và nguyên tắc bán bảo toàn (một mạch cũ, một mạch mới).</p>
-            </div>
-            <div class="card">
-                <h2>2. Phiên Mã và Dịch Mã</h2>
-                <p><b>- Phiên mã:</b> Tổng hợp RNA từ khuôn DNA (mạch gốc 3' -> 5'). Enzyme chính: RNA polymerase.</p>
-                <p><b>- Dịch mã:</b> Tổng hợp chuỗi polypeptide (protein) dựa trên thông tin mRNA tại ribosome.</p>
-            </div>
-            <div class="card">
-                <h2>3. Đột Biến Gen & Quy Luật Mendel</h2>
-                <p><b>- Đột biến gen:</b> Những biến đổi trong cấu trúc của gen (mất, thêm, thay thế cặp nucleotide).</p>
-                <p><b>- Quy luật Phân li:</b> Mỗi tính trạng do một cặp allele quy định. Khi giảm phân, các allele phân li đồng đều về các giao tử.</p>
-                <p><b>- Quy luật Phân li độc lập:</b> Các cặp allele phân li độc lập với nhau trong quá trình hình thành giao tử.</p>
-            </div>
-        </div>
-
-        <!-- CÂU HỎI TRẮC NGHIỆM -->
-        <div id="quiz" class="tab-content">
-            <div id="resultBox" class="result-box"></div>
-            
-            <form id="quizForm">
-                <!-- Phần 1: Nhiều lựa chọn -->
-                <div class="card">
-                    <h2>Phần I: Câu Hỏi Trắc Nghiệm (Nhiều Lựa Chọn)</h2>
-                    <div id="mcq-container"></div>
-                </div>
-
-                <!-- Phần 2: Đúng / Sai -->
-                <div class="card">
-                    <h2>Phần II: Câu Hỏi Đúng / Sai</h2>
-                    <div id="tf-container"></div>
-                </div>
-
-                <!-- Phần 3: Trả lời ngắn -->
-                <div class="card">
-                    <h2>Phần III: Câu Hỏi Trả Lời Ngắn</h2>
-                    <div id="sa-container"></div>
-                </div>
-
-                <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Nộp Bài</button>
-                <button type="button" class="btn-reset" id="resetBtn" onclick="resetQuiz()">Làm Lai Bài</button>
-            </form>
-        </div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-container">
+      <button class="nav-btn active" onclick="switchSection('home')">Trang chủ</button>
+      <button class="nav-btn" onclick="switchSection('knowledge')">Kiến thức</button>
+      <button class="nav-btn" onclick="switchSection('quiz')">Trắc nghiệm</button>
+      <button class="nav-btn" onclick="switchSection('tf')">Đúng/Sai</button>
+      <button class="nav-btn" onclick="switchSection('short')">Trả lời ngắn</button>
+      <button class="nav-btn" onclick="switchSection('exam')">Luyện thi</button>
+      <button class="nav-btn" onclick="switchSection('result')">Kết quả</button>
     </div>
+  </nav>
 
-    <script>
-        // Dữ liệu câu hỏi
-        const mcqData = [
-            { q: "Mã di truyền có tính đặc hiệu, nghĩa là:", options: ["Nhiều bộ ba cùng mã hóa cho một amino acid", "Một bộ ba chỉ mã hóa cho một loại amino acid", "Tất cả các loài đều dùng chung một bộ mã", "Mã di truyền được đọc liên tục từ một điểm xác định"], ans: 1, exp: "Tính đặc hiệu: 1 bộ ba chỉ mã hóa cho 1 loại amino acid." },
-            { q: "Bộ ba nào sau đây là bộ ba mở đầu trên mRNA?", options: ["UAA", "UAG", "UGA", "AUG"], ans: 3, exp: "AUG là bộ ba mở đầu quy định amino acid Metionin." },
-            { q: "Quá trình nhân đôi DNA được thực hiện theo nguyên tắc nào?", options: ["Bổ sung và bán bảo toàn", "Bổ sung và bảo toàn", "Bán bảo toàn và gián đoạn", "Mạch liên tục và mạch gián đoạn"], ans: 0, exp: "Nhân đôi DNA theo nguyên tắc bổ sung và bán bảo toàn (giữ lại 1 mạch cũ)." },
-            { q: "Enzyme chính tham gia vào quá trình phiên mã là:", options: ["DNA polymerase", "RNA polymerase", "Ligase", "Helicase"], ans: 1, exp: "RNA polymerase chịu trách nhiệm tổng hợp mạch RNA từ khuôn DNA." },
-            { q: "Trong tế bào, quá trình dịch mã diễn ra tại đâu?", options: ["Trong nhân", "Tại Ribosome", "Tại Ty thể", "Trên màng tế bào"], ans: 1, exp: "Ribosome là nhà máy tổng hợp chuỗi polypeptide (dịch mã) trong tế bào chất." },
-            { q: "Đột biến gen là những biến đổi xảy ra ở cấp độ:", options: ["Phân tử", "Tế bào", "Cơ thể", "Quần thể"], ans: 0, exp: "Đột biến gen xảy ra ở cấu trúc DNA nên thuộc cấp độ phân tử." },
-            { q: "Dạng đột biến gen nào sau đây KHÔNG làm thay đổi số lượng nucleotide của gen?", options: ["Mất một cặp nucleotide", "Thêm một cặp nucleotide", "Thay thế một cặp nucleotide", "Mất hai cặp nucleotide"], ans: 2, exp: "Thay thế 1 cặp này bằng 1 cặp khác giữ nguyên tổng số nucleotide." },
-            { q: "Theo Mendel, phép mọc giữa hai cơ thể bố mẹ thuần chủng khác nhau về một cặp tính trạng tương phản gọi là:", options: ["Lai phân tích", "Lai một cặp tính trạng", "Lai hai cặp tính trạng", "Phép lai thuận nghịch"], ans: 1, exp: "Lai một cặp tính trạng khảo sát sự di truyền của 1 cặp tính trạng duy nhất." },
-            { q: "Cơ thể có kiểu gen AaBb khi giảm phân bình thường cho tối đa bao nhiêu loại giao tử?", options: ["2", "4", "6", "8"], ans: 1, exp: "Công thức loại giao tử: 2^n = 2^2 = 4 loại giao tử (AB, Ab, aB, ab)." },
-            { q: "Hiện tượng một gen tác động đến sự biểu hiện của nhiều tính trạng khác nhau gọi là:", options: ["Gen đa hiệu", "Tương tác gen", "Liên kết gen", "Hoán vị gen"], ans: 0, exp: "Gen đa hiệu là trường hợp 1 gen chi phối nhiều tính trạng." },
-            { q: "Ở người, bệnh nào sau đây do đột biến gen di truyền gây ra?", options: ["Hội chứng Down", "Bệnh máu khó đông", "Hội chứng Turner", "Hội chứng Klinefelter"], ans: 1, exp: "Máu khó đông do đột biến gen lặn nằm trên nhiễm sắc thể X." },
-            { q: "Phân tử RNA nào đóng vai trò vận chuyển amino acid trong quá trình dịch mã?", options: ["mRNA", "tRNA", "rRNA", "snRNA"], ans: 1, exp: "tRNA (RNA vận chuyển) mang amino acid tới ribosome." },
-            { q: "Một đoạn mạch gốc DNA có trình tự 3'... ATG-TAX ...5'. Trình tự mRNA tương ứng là:", options: ["5'... UAX-AUG ...3'", "5'... UAX-AUGA ...3'", "3'... UAX-AUG ...5'", "5'... TAX-ATG ...3'"], ans: 0, exp: "Phiên mã theo nguyên tắc bổ sung: A-U, T-A, G-C, X-G." },
-            { q: "Quá trình tự nhân đôi DNA xảy ra ở kỳ nào của chu kỳ tế bào?", options: ["Kỳ trung gian (Pha S)", "Kỳ đầu", "Kỳ giữa", "Kỳ sau"], ans: 0, exp: "DNA nhân đôi tại pha S của Kỳ trung gian." },
-            { q: "Đột biến thay thế 1 cặp nucleotide làm cho codon mã hóa amino acid trở thành codon kết thúc thì chuỗi protein sẽ:", options: ["Bị ngắn lại", "Dài hơn", "Không đổi", "Biến đổi hoàn toàn"], ans: 0, exp: "Xuất hiện codon kết thúc sớm làm quá trình dịch mã dừng lại, protein bị ngắn." }
-        ];
+  <div class="container">
 
-        const tfData = [
-            { q: "Khi nói về quá trình nhân đôi DNA, các phát biểu sau đây Đúng hay Sai?", 
-              items: [
-                { text: "Enzyme DNA polymerase lắp ráp nucleotide theo chiều 5' -> 3'.", ans: true },
-                { text: "Mạch mới luôn được tổng hợp liên tục trên cả hai mạch khuôn.", ans: false },
-                { text: "Quá trình nhân đôi diễn ra theo nguyên tắc bán bảo toàn.", ans: true }
-              ],
-              exp: "Mạch khuôn 5'-3' tổng hợp ngắt quãng (đoạn Okazaki). Mạch khuôn 3'-5' tổng hợp liên tục."
-            },
-            { q: "Khi nói về mã di truyền:", 
-              items: [
-                { text: "Mã di truyền gồm có 64 bộ ba, tất cả đều mã hóa amino acid.", ans: false },
-                { text: "Tính thoái hóa nghĩa là một bộ ba mã hóa cho nhiều amino acid.", ans: false }
-              ],
-              exp: "Có 3 bộ ba kết thúc KHÔNG mã hóa. Tính thoái hóa nghĩa là nhiều bộ ba cùng mã hóa 1 amino acid."
+    <!-- 1. TRANG CHỦ -->
+    <section id="home" class="section active">
+      <div class="card">
+        <h2>Chào mừng các học viên GDTX!</h2>
+        <p style="margin-top: 10px;">Website được thiết kế dành riêng cho học viên hệ GDTX nhằm nâng cao chất lượng tự học, ôn luyện trọng tâm kiến thức Sinh học 12 và tự đánh giá năng lực một cách dễ dàng, trực quan.</p>
+      </div>
+
+      <div class="grid-menu">
+        <button class="grid-btn" onclick="switchSection('knowledge')">📚 Học kiến thức</button>
+        <button class="grid-btn" onclick="switchSection('quiz')">📝 Làm trắc nghiệm</button>
+        <button class="grid-btn" onclick="switchSection('tf')">☑️ Luyện Đúng/Sai</button>
+        <button class="grid-btn" onclick="switchSection('short')">✍️ Trả lời ngắn</button>
+        <button class="grid-btn" onclick="switchSection('exam')">🎯 Luyện thi</button>
+      </div>
+
+      <div class="card">
+        <h3>Hướng dẫn học tập</h3>
+        <div class="steps-container">
+          <div class="step-box">
+            <h4>Bước 1</h4>
+            <p>Học kiến thức trọng tâm theo từng chủ đề chuẩn GDTX.</p>
+          </div>
+          <div class="step-box">
+            <h4>Bước 2</h4>
+            <p>Luyện tập trắc nghiệm, Đúng/Sai, trả lời ngắn để củng cố.</p>
+          </div>
+          <div class="step-box">
+            <h4>Bước 3</h4>
+            <p>Làm các đề thi tổng hợp có bấm giờ thực tế.</p>
+          </div>
+          <div class="step-box">
+            <h4>Bước 4</h4>
+            <p>Xem phân tích kết quả, lời giải và ôn lại nội dung chưa vững.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. KIẾN THỨC -->
+    <section id="knowledge" class="section">
+      <div class="card">
+        <h2>KIẾN THỨC TRỌNG TÂM SINH HỌC 12</h2>
+        <p style="margin-bottom: 15px;">Tra cứu nhanh khái niệm, nội dung cốt lõi và gợi ý ôn tập.</p>
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Bạn muốn tìm kiến thức gì? (VD: ADN, đột biến, quần thể...)" onkeyup="filterKnowledge()">
+        </div>
+      </div>
+
+      <div class="topic-list" id="topicContainer">
+        <!-- Topic 1 -->
+        <div class="topic-card">
+          <h3>Di truyền học <span class="tag">Chủ đề 1</span></h3>
+          <p>Cơ chế di truyền và biến dị ở cấp độ tế bào, phân tử. Các quy luật di truyền Mendell, liên kết, hoán vị và di truyền quần thể.</p>
+          <button class="btn btn-outline" onclick="toggleDetail('topic1')">Xem chi tiết</button>
+          <div id="topic1" class="topic-detail">
+            <p><strong>Khái niệm quan trọng:</strong> ADN, ARN, Mã di truyền, Nhân đôi ADN, Phiên mã, Dịch mã, Đột biến gen, Đột biến nhiễm sắc thể.</p>
+            <p><strong>Nội dung cần nhớ:</strong> Nguyên tắc bổ sung trong nhân đôi và phiên mã (A-T, G-X, A-U). Mã di truyền có tính đặc hiệu, thoái hóa, phổ biến. Đột biến điểm gồm mất, thêm, thay thế 1 cặp nucleotide.</p>
+            <p><strong>Từ khóa:</strong> Nucleotide, Ribosome, Codon, Anticodon, Thể lệch bội, Thể đa bội.</p>
+            <p><strong>Gợi ý ôn tập:</strong> Nắm chắc sơ đồ ADN -> mARN -> Protein -> Tính trạng; Các dạng đột biến cấu trúc và số lượng NST.</p>
+          </div>
+        </div>
+        <!-- Topic 2 -->
+        <div class="topic-card">
+          <h3>Tiến hóa <span class="tag">Chủ đề 2</span></h3>
+          <p>Bằng chứng tiến hóa, các học thuyết tiến hóa (Darwin, Hiện đại) và quá trình phát sinh sự sống trên Trái Đất.</p>
+          <button class="btn btn-outline" onclick="toggleDetail('topic2')">Xem chi tiết</button>
+          <div id="topic2" class="topic-detail">
+            <p><strong>Khái niệm quan trọng:</strong> Bằng chứng giải phẫu so sánh, Bằng chứng hóa thạch, Nhân tố tiến hóa, Chọn lọc tự nhiên.</p>
+            <p><strong>Nội dung cần nhớ:</strong> 5 nhân tố tiến hóa (Đột biến, Giao phối không ngẫu nhiên, Di - nhập gen, Chọn lọc tự nhiên, Các yếu tố ngẫu nhiên). Trong đó CLTN quy định chiều hướng tiến hóa.</p>
+            <p><strong>Từ khóa:</strong> Cơ quan tương đồng, Cơ quan thoái hóa, Vốn gen, Tần số allele, Cách ly sinh thái.</p>
+            <p><strong>Gợi ý ôn tập:</strong> Phân biệt rõ vai trò của từng nhân tố tiến hóa đối với vốn gen của quần thể.</p>
+          </div>
+        </div>
+        <!-- Topic 3 -->
+        <div class="topic-card">
+          <h3>Sinh thái học <span class="tag">Chủ đề 3</span></h3>
+          <p>Cơ thể và môi trường, Sinh thái học quần thể, Quần xã sinh vật và Hệ sinh thái - Bảo vệ môi trường.</p>
+          <button class="btn btn-outline" onclick="toggleDetail('topic3')">Xem chi tiết</button>
+          <div id="topic3" class="topic-detail">
+            <p><strong>Khái niệm quan trọng:</strong> Ô sinh thái, Giới hạn sinh thái, Kích thước quần thể, Chuỗi thức ăn, Lưới thức ăn, Tháp sinh thái.</p>
+            <p><strong>Nội dung cần nhớ:</strong> Chuỗi thức ăn bắt đầu bằng sinh vật sản xuất hoặc sinh vật phân giải. Dòng năng lượng trong hệ sinh thái truyền một chiều và giảm dần qua các bậc dinh dưỡng.</p>
+            <p><strong>Từ khóa:</strong> Khống chế sinh học, Diễn thế sinh thái, Sinh vật sản xuất, Sinh vật tiêu thụ, Sinh vật phân giải.</p>
+            <p><strong>Gợi ý ôn tập:</strong> Kỹ năng vẽ và phân tích sơ đồ lưới thức ăn, các mối quan hệ giữa các loài (Cộng sinh, Hợp tác, Ký sinh, Cạnh tranh).</p>
+          </div>
+        </div>
+        <!-- Topic 4 -->
+        <div class="topic-card">
+          <h3>Sinh học cơ thể & Ứng dụng <span class="tag">Chủ đề 4</span></h3>
+          <p>Trao đổi chất và chuyển hóa năng lượng, ứng dụng di truyền học vào chọn tạo giống và công nghệ sinh học.</p>
+          <button class="btn btn-outline" onclick="toggleDetail('topic4')">Xem chi tiết</button>
+          <div id="topic4" class="topic-detail">
+            <p><strong>Khái niệm quan trọng:</strong> Quang hợp, Hô hấp, Ưu thế lai, Công nghệ gen, Công nghệ tế bào.</p>
+            <p><strong>Nội dung cần nhớ:</strong> Thể truyền (Plasmid hoặc virus) dùng trong chuyển gen. Lai tế bào sinh dưỡng (dung hợp tế bào trần) tạo cây lai mang đặc tính của 2 loài khác nhau.</p>
+            <p><strong>Từ khóa:</strong> ADN tái tổ hợp, Enzyme cắt (Restriction), Enzyme nối (Ligase), Nuôi cấy mô, Cừu Dolly.</p>
+            <p><strong>Gợi ý ôn tập:</strong> Nắm vững quy trình tạo ADN tái tổ hợp và ứng dụng thực tiễn trong y học, nông nghiệp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TRẮC NGHIỆM -->
+    <section id="quiz" class="section">
+      <div class="quiz-config">
+        <div class="config-group">
+          <label for="quizCount"><strong>Số câu hỏi:</strong></label>
+          <select id="quizCount">
+            <option value="10">10 câu</option>
+            <option value="20">20 câu</option>
+            <option value="30">30 câu</option>
+            <option value="50">50 câu</option>
+          </select>
+        </div>
+        <div class="config-group">
+          <label for="quizTime"><strong>Thời gian:</strong></label>
+          <select id="quizTime">
+            <option value="0">Không giới hạn</option>
+            <option value="10">10 phút</option>
+            <option value="20">20 phút</option>
+            <option value="30">30 phút</option>
+            <option value="45">45 phút</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="startQuiz()">Bắt đầu làm bài</button>
+      </div>
+
+      <div id="quizDisplay" style="display:none;">
+        <div class="card" style="padding: 15px;">
+          <div class="timer-badge" id="quizTimer">⏱️ 00:00</div>
+          <span id="quizProgress" style="font-weight: bold; color: var(--primary);">Câu 1 / 10</span>
+        </div>
+
+        <div class="question-box">
+          <div class="q-meta">
+            <span id="qLevel">Mức độ: Nhận biết</span>
+            <span id="qTopic">Chủ đề: Di truyền</span>
+          </div>
+          <div class="q-text" id="qText">Nội dung câu hỏi hiển thị tại đây</div>
+          <div class="options" id="qOptions"></div>
+        </div>
+
+        <div class="nav-controls">
+          <button class="btn btn-secondary" id="btnPrev" onclick="prevQuestion()">Câu trước</button>
+          <button class="btn btn-secondary" id="btnNext" onclick="nextQuestion()">Câu tiếp theo</button>
+          <button class="btn btn-primary" style="background-color: var(--accent);" onclick="confirmSubmitQuiz()">Nộp bài</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ĐÚNG / SAI -->
+    <section id="tf" class="section">
+      <div class="card">
+        <h2>LUYỆN TẬP CÂU HỎI ĐÚNG / SAI</h2>
+        <p>Đọc kỹ đoạn thông tin và chọn Đúng hoặc Sai cho mỗi mệnh đề bên dưới.</p>
+      </div>
+      <div id="tfContainer"></div>
+      <button class="btn btn-primary btn-block" onclick="gradeTF()">Nộp bài & Chấm điểm Đúng/Sai</button>
+    </section>
+
+    <!-- 5. TRẢ LỜI NGẮN -->
+    <section id="short" class="section">
+      <div class="card">
+        <h2>CÂU HỎI TRẢ LỜI NGẮN</h2>
+        <p>Điền câu trả lời ngắn gọn (từ ngữ, số liệu) vào ô trống, sau đó bấm xem đáp án tham khảo để đối chiếu.</p>
+      </div>
+      <div id="shortContainer"></div>
+      <button class="btn btn-primary btn-block" onclick="checkShortAnswers()">Nộp bài & Đối chiếu đáp án</button>
+    </section>
+
+    <!-- 6. LUYỆN THI -->
+    <section id="exam" class="section">
+      <div class="card">
+        <h2>KHO ĐỀ LUYỆN THI TỔNG HỢP</h2>
+        <p>Chọn cấu trúc đề kiểm tra phù hợp để bắt đầu rèn luyện áp lực thời gian.</p>
+      </div>
+
+      <div class="grid-menu">
+        <button class="grid-btn" onclick="startExam(10, 15)">⏱️ Đề 15 phút<br><small>(10 câu trắc nghiệm)</small></button>
+        <button class="grid-btn" onclick="startExam(20, 30)">⏱️ Đề 30 phút<br><small>(20 câu trắc nghiệm)</small></button>
+        <button class="grid-btn" onclick="startExam(30, 45)">⏱️ Đề 45 phút<br><small>(30 câu trắc nghiệm)</small></button>
+        <button class="grid-btn" onclick="startExam(50, 45)">🎯 Đề Tổng Hợp<br><small>(50 câu full kiến thức)</small></button>
+      </div>
+    </section>
+
+    <!-- 7. KẾT QUẢ -->
+    <section id="result" class="section">
+      <div class="card result-summary">
+        <h2>KẾT QUẢ HỌC TẬP</h2>
+        <p id="resultTimeText" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;"></p>
+        <div class="score-circle" id="scoreDisplay">0.0</div>
+        <h3 id="scoreStats">Đúng 0 / 0 câu</h3>
+        <p id="scorePercent">Tỷ lệ đúng: 0%</p>
+
+        <div class="feedback-box" id="feedbackBox">
+          Chưa có dữ liệu bài làm. Hãy tham gia luyện tập trắc nghiệm hoặc luyện thi!
+        </div>
+
+        <button class="btn btn-primary" onclick="restartCurrentQuiz()" style="margin-top: 10px;">Làm lại bài</button>
+      </div>
+
+      <div class="card">
+        <h3>CHI TIẾT BÀI LÀM VÀ GIẢI THÍCH</h3>
+        <div id="reviewContainer" style="margin-top: 15px;">
+          <p style="color: var(--text-muted);">Chi tiết các câu hỏi sẽ hiển thị sau khi bạn hoàn thành bài nộp.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>TRỢ LÝ HỌC TẬP SINH HỌC 12 – GDTX</strong></p>
+    <p>Giáo viên phụ trách: [Họ và tên Giáo viên] | Môn: Sinh học 12</p>
+    <p>Đơn vị: Trung tâm Giáo dục thường xuyên | Hỗ trợ học viên tự học & ôn thi tốt nghiệp</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* =========================================================
+       1. DATA BANK (50 MCQ, 10 TF, 10 SHORT ANSWER)
+       ========================================================= */
+
+    // 50 CÂU TRẮC NGHIỆM CHUẨN GDTX 12
+    const mcqBank = [
+      // Di truyền (20 câu)
+      { id: 1, topic: "Di truyền", level: "Nhận biết", q: "Đơn vị cấu tạo nên gen và ADN là gì?", a: "Nucleotide", b: "Amino acid", c: "Glucose", d: "Fatty acid", correct: "A", exp: "ADN và gen được cấu tạo theo nguyên tắc đa phân, đơn phân là các nucleotide (A, T, G, X)." },
+      { id: 2, topic: "Di truyền", level: "Nhận biết", q: "Loại bazơ nitơ nào sau đây chỉ có trong ARN mà không có trong ADN?", a: "Thymin (T)", b: "Uraxin (U)", c: "Adenin (A)", d: "Guanin (G)", correct: "B", exp: "ARN chứa Uraxin (U) thay cho Thymin (T) trong ADN." },
+      { id: 3, topic: "Di truyền", level: "Nhận biết", q: "Mã di truyền có tính đặc hiệu nghĩa là gì?", a: "Nhiều bộ ba cùng mã hóa 1 amino acid", b: "Một bộ ba chỉ mã hóa 1 loại amino acid", c: "Tất cả các loài đều dùng chung bộ mã", d: "Mã di truyền đọc đè lên nhau", correct: "B", exp: "Tính đặc hiệu: Một bộ ba (codon) chỉ mã hóa cho một loại amino acid." },
+      { id: 4, topic: "Di truyền", level: "Nhận biết", q: "Quá trình nhân đôi ADN diễn ra theo những nguyên tắc nào?", a: "Bổ sung và bán bảo tồn", b: "Bổ sung và bảo tồn", c: "Bán bảo tồn và gián đoạn", d: "Bổ sung và ngẫu nhiên", correct: "A", exp: "Quá trình tự nhân đôi ADN tuân theo 2 nguyên tắc: Bổ sung và Bán bảo tồn." },
+      { id: 5, topic: "Di truyền", level: "Thông hiểu", q: "Một phân tử ADN ở vi khuẩn có 20% Adenin. Tỷ lệ nucleotide loại Guanin là bao nhiêu?", a: "20%", b: "30%", c: "40%", d: "10%", correct: "B", exp: "Theo NTBS: A = T = 20%. Do A + G = 50% => G = 50% - 20% = 30%." },
+      { id: 6, topic: "Di truyền", level: "Nhận biết", q: "Bộ ba mở đầu trên mARN quy định tổng hợp amino acid methionine ở sinh vật nhân thực là:", a: "5'UAA3'", b: "5'AUG3'", c: "5'UAG3'", d: "5'UGA3'", correct: "B", exp: "5'AUG3' là mã mở đầu quy định methionine (ở nhân thực) hoặc fMet (ở nhân sơ)." },
+      { id: 7, topic: "Di truyền", level: "Nhận biết", q: "Đột biến điểm là những biến đổi xảy ra ở:", a: "Một vài cặp nucleotide", b: "Một cặp nucleotide", c: "Toàn bộ phân tử ADN", d: "Cấu trúc nhiễm sắc thể", correct: "B", exp: "Đột biến điểm là dạng đột biến gen liên quan đến biến đổi tại 1 cặp nucleotide." },
+      { id: 8, topic: "Di truyền", level: "Thông hiểu", q: "Dạng đột biến gen nào sau đây làm thay đổi chiều dài của gen?", a: "Thay thế 1 cặp A-T bằng G-X", b: "Thay thế 1 cặp G-X bằng A-T", c: "Mất 1 cặp A-T", d: "Đảo vị trí 1 cặp nucleotide", correct: "C", exp: "Mất hoặc thêm cặp nucleotide làm thay đổi chiều dài gen; Thay thế/đảo vị trí không làm thay đổi chiều dài." },
+      { id: 9, topic: "Di truyền", level: "Nhận biết", q: "Bộ nhiễm sắc thể của người bị hội chứng Đao (Down) có bao nhiêu nhiễm sắc thể?", a: "45", b: "46", c: "47", d: "48", correct: "C", exp: "Hội chứng Đao là thể ba ở cặp NST số 21 (2n + 1 = 47 NST)." },
+      { id: 10, topic: "Di truyền", level: "Thông hiểu", q: "Ở đậu Hà Lan, gen A: hạt vàng trội hoàn toàn so với a: hạt xanh. Phép lai Aa x aa cho tỷ lệ kiểu hình là:", a: "3 vàng : 1 xanh", b: "1 vàng : 1 xanh", c: "100% vàng", d: "100% xanh", correct: "B", exp: "Aa x aa -> 1Aa (vàng) : 1aa (xanh)." },
+      { id: 11, topic: "Di truyền", level: "Nhận biết", q: "Cơ thể có kiểu gen AaBbDdd khi giảm phân bình thường tạo ra tối đa bao nhiêu loại giao tử?", a: "4", b: "8", c: "16", d: "2", correct: "A", exp: "Cặp Aa cho 2 loại, Bb cho 2 loại, Dd cho 1 loại (ghi nhận dị hợp 2 cặp Aa và Bb) -> 2 x 2 x 1 = 4 loại." },
+      { id: 12, topic: "Di truyền", level: "Nhận biết", q: "Bản chất của quy luật phân ly độc lập Mendell là sự phân ly độc lập của:", a: "Các tính trạng", b: "Các cặp allele trong quá trình giảm phân", c: "Các kiểu hình ở F2", d: "Các nhân tố môi trường", correct: "B", exp: "Các cặp allele phân ly độc lập trong quá trình hình thành giao tử." },
+      { id: 13, topic: "Di truyền", level: "Thông hiểu", q: "Hiện tượng hoán vị gen xảy ra do sự tiếp hợp và trao đổi đoạn giữa 2 chromatid:", a: "Khác nguồn gốc trong cặp NST tương đồng", b: "Cùng nguồn gốc trong cặp NST tương đồng", c: "Thuộc 2 cặp NST khác nhau", d: "Của 2 NST giới tính X và Y", correct: "A", exp: "Hoán vị gen xảy ra do trao đổi chéo giữa 2 trong 4 chromatid khác nguồn gốc ở kỳ đầu giảm phân I." },
+      { id: 14, topic: "Di truyền", level: "Nhận biết", q: "Bệnh nào sau đây ở người do gen lặn nằm trên nhiễm sắc thể giới tính X quy định?", a: "Bệnh Đao", b: "Bệnh mù màu", c: "Bệnh bạch tạng", d: "Bệnh KLINEFELTER", correct: "B", exp: "Bệnh mù màu và máu khó đông do gen lặn trên NST X (không có allele tương ứng trên Y)." },
+      { id: 15, topic: "Di truyền", level: "Nhận biết", q: "Tập hợp tất cả các allele có trong một quần thể tại một thời điểm xác định được gọi là:", a: "Vốn gen", b: "Tần số kiểu gen", c: "Tần số allele", d: "Kiểu gen quần thể", correct: "A", exp: "Vốn gen là toàn bộ các allele của tất cả các gen trong quần thể." },
+      { id: 16, topic: "Di truyền", level: "Thông hiểu", q: "Một quần thể đạt trạng thái cân bằng di truyền Hardy-Weinberg khi có cấu trúc kiểu gen thỏa mãn công thức nào? (với p là tần số A, q là tần số a)", a: "p^2 + pq + q^2 = 1", b: "p^2 + 2pq + q^2 = 1", c: "2p + 2pq + 2q = 1", d: "p^2 + 2pq + 2q^2 = 1", correct: "B", exp: "Định luật Hardy-Weinberg: p^2 AA + 2pq Aa + q^2 aa = 1." },
+      { id: 17, topic: "Di truyền", level: "Vận dụng", q: "Quần thể tự thụ phấn có thành phần kiểu gen thế hệ P là 100% Aa. Ở thế hệ F1, tỷ lệ kiểu gen aa là:", a: "25%", b: "50%", c: "75%", d: "12.5%", correct: "A", exp: "Tự thụ phấn Aa -> F1: 1/4 AA : 2/4 Aa : 1/4 aa (aa = 25%)." },
+      { id: 18, topic: "Di truyền", level: "Nhận biết", q: "Phương pháp tạo giống cây trồng nào sau đây có thể thu được cây thuần chủng về tất cả các gen?", a: "Nuôi cấy hạt phấn sau đó lưỡng bội hóa", b: "Giâm cành", c: "Chiết cành", d: "Lai tạo thông thường", correct: "A", exp: "Nuôi cấy hạt phấn (n) rồi lưỡng bội hóa (2n) tạo cây đồng hợp tử (thuần chủng) về tất cả các gen." },
+      { id: 19, topic: "Di truyền", level: "Nhận biết", q: "Trong kĩ thuật chuyển gen, enzyme nào được dùng để cắt ADN nguồn và Plasmid tại cùng vị trí?", a: "Enzyme nối Ligase", b: "Enzyme cắt Restriction", c: "Enzyme ADN polymerase", d: "Enzyme Amylase", correct: "B", exp: "Restriction endonuclease (enzyme cắt hạn chế) dùng cắt dán gen." },
+      { id: 20, topic: "Di truyền", level: "Thông hiểu", q: "Ưu thế lai thể hiện rõ nhất ở thế hệ nào trong phép lai?", a: "Thế hệ bố mẹ P", b: "Thế hệ F1", c: "Thế hệ F2", d: "Thế hệ F3", correct: "B", exp: "Ưu thế lai cao nhất ở F1, sau đó giảm dần qua các thế hệ do tỷ lệ dị hợp giảm." },
+
+      // Tiến hóa (15 câu)
+      { id: 21, topic: "Tiến hóa", level: "Nhận biết", q: "Cánh chim và tay người là ví dụ về cơ quan nào?", a: "Cơ quan tương đồng", b: "Cơ quan tương tự", c: "Cơ quan thoái hóa", d: "Cơ quan vô hại", correct: "A", exp: "Cơ quan tương đồng có cùng nguồn gốc phôi sinh nhưng thực hiện chức năng khác nhau." },
+      { id: 22, topic: "Tiến hóa", level: "Nhận biết", q: "Gai xương rồng và tua cuốn của đậu Hà Lan là biến dạng của bộ phận nào?", a: "Rễ", b: "Lá", c: "Thân", d: "Hoa", correct: "B", exp: "Cả gai xương rồng và tua cuốn đậu Hà Lan đều là cơ quan tương đồng (do lá biến dạng)." },
+      { id: 23, topic: "Tiến hóa", level: "Nhận biết", q: "Theo Đacuyn, động lực chính driving chọn lọc tự nhiên là:", a: "Đột biến gen", b: "Đấu tranh sinh tồn", c: "Thay đổi nhiệt độ", d: "Tác động con người", correct: "B", exp: "Theo Darwin, đấu tranh sinh tồn là động lực thúc đẩy chọn lọc tự nhiên." },
+      { id: 24, topic: "Tiến hóa", level: "Nhận biết", q: "Theo học thuyết tiến hóa hiện đại, nhân tố nào sau đây cung cấp nguồn nguyên liệu sơ cấp cho tiến hóa?", a: "Đột biến", b: "Chọn lọc tự nhiên", c: "Giao phối ngẫu nhiên", d: "Di - nhập gen", correct: "A", exp: "Đột biến cung cấp nguyên liệu sơ cấp; Biến dị tổ hợp cung cấp nguyên liệu thứ cấp." },
+      { id: 25, topic: "Tiến hóa", level: "Thông hiểu", q: "Nhân tố tiến hóa nào làm thay đổi tần số allele của quần thể theo một hướng xác định?", a: "Đột biến gen", b: "Chọn lọc tự nhiên", c: "Các yếu tố ngẫu nhiên", d: "Giao phối không ngẫu nhiên", correct: "B", exp: "Chọn lọc tự nhiên là nhân tố quy định chiều hướng và nhịp điệu tiến hóa." },
+      { id: 26, topic: "Tiến hóa", level: "Nhận biết", q: "Nhân tố tiến hóa nào KHÔNG làm thay đổi tần số allele nhưng làm thay đổi thành phần kiểu gen của quần thể?", a: "Di - nhập gen", b: "Giao phối không ngẫu nhiên", c: "Chọn lọc tự nhiên", d: "Đột biến", correct: "B", exp: "Giao phối không ngẫu nhiên làm tăng đồng hợp, giảm dị hợp, không đổi tần số allele." },
+      { id: 27, topic: "Tiến hóa", level: "Thông hiểu", q: "Hiện tượng biến động số lượng cá thể của quần thể do bão lũ, thiên tai thuộc nhân tố tiến hóa nào?", a: "Chọn lọc tự nhiên", b: "Các yếu tố ngẫu nhiên (phiêu bạt gen)", c: "Di gen", d: "Đột biến", correct: "B", exp: "Thiên tai làm giảm mạnh số lượng cá thể bất kể kiểu gen là tác động của yếu tố ngẫu nhiên." },
+      { id: 28, topic: "Tiến hóa", level: "Nhận biết", q: "Tiêu chuẩn quan trọng nhất để phân biệt hai loài sinh sản hữu tính là gì?", a: "Cách ly di truyền (cách ly sinh sản)", b: "Hình thái ngoài", c: "Địa lý", d: "Tập tính", correct: "A", exp: "Cách ly sinh sản là tiêu chuẩn khách quan và chuẩn xác nhất để phân biệt 2 loài." },
+      { id: 29, topic: "Tiến hóa", level: "Nhận biết", q: "Hình thành loài mới bằng con طريق lai xa và đa bội hóa phổ biến nhất ở nhóm sinh vật nào?", a: "Động vật có xương sống", b: "Thực vật", c: "Vi khuẩn", d: "Nấm", correct: "B", exp: "Lai xa và đa bội hóa diễn ra phổ biến ở thực vật (ít gặp ở động vật vì gây chết/vô sinh)." },
+      { id: 30, topic: "Tiến hóa", level: "Nhận biết", q: "Thứ tự đúng của các đại địa chất từ cổ đến đại kim là:", a: "Thái cổ -> Nguyên cổ -> Cổ sinh -> Trung sinh -> Tân sinh", b: "Cổ sinh -> Trung sinh -> Tân sinh -> Thái cổ", c: "Tân sinh -> Trung sinh -> Cổ sinh -> Nguyên cổ", d: "Thái cổ -> Cổ sinh -> Trung sinh -> Tân sinh", correct: "A", exp: "Thứ tự 5 đại: Thái cổ -> Nguyên cổ -> Cổ sinh -> Trung sinh -> Tân sinh." },
+      { id: 31, topic: "Tiến hóa", level: "Nhận biết", q: "Con người xuất hiện ở đại nào trong lịch sử phát triển Trái Đất?", a: "Đại Trung sinh", b: "Đại Tân sinh", c: "Đại Cổ sinh", d: "Đại Nguyên cổ", correct: "B", exp: "Loài người xuất hiện ở Kỷ Đệ Tứ thuộc Đại Tân sinh." },
+      { id: 32, topic: "Tiến hóa", level: "Thông hiểu", q: "Cơ quan thoái hóa ở con người là ví dụ của:", a: "Ruột thừa, răng khôn", b: "Cánh chim, vây cá", c: "Tay người, chân chó", d: "Mắt người, mắt bạch tuộc", correct: "A", exp: "Ruột thừa, xương cùng, răng khôn là dấu vết cơ quan thoái hóa ở người." },
+      { id: 33, topic: "Tiến hóa", level: "Vận dụng", q: "Sự kháng thuốc kháng sinh của vi khuẩn là minh chứng rõ nhất cho tác động của:", a: "Chọn lọc tự nhiên", b: "Chọn lọc nhân tạo", c: "Đột biến nhân tạo", d: "Cách ly địa lý", correct: "A", exp: "Thuốc kháng sinh giữ vai trò nhân tố chọn lọc cá thể vi khuẩn mang gen đột biến kháng thuốc." },
+      { id: 34, topic: "Tiến hóa", level: "Nhận biết", q: "Sự sống đầu tiên trên Trái Đất được hình thành trong môi trường nào?", a: "Khí quyển", b: "Lòng đất sâu", c: "Nước đại dương cổ", d: "Trên băng giá", correct: "C", exp: "Các mầm sống đầu tiên (coacerva) xuất hiện trong môi trường nước đại dương nguyên thủy." },
+      { id: 35, topic: "Tiến hóa", level: "Nhận biết", q: "Hình thành loài cùng khu địa lý thường gặp theo những con đường nào?", a: "Cách ly tập tính, cách ly sinh thái, lai xa và đa bội hóa", b: "Cách ly địa lý hoàn toàn", c: "Di cư hàng loạt", d: "Đột biến nhân tạo", correct: "A", exp: "Hình thành loài cùng khu vực gồm cách ly tập tính, sinh thái và lai xa + đa bội hóa." },
+
+      // Sinh thái học (15 câu)
+      { id: 36, topic: "Sinh thái", level: "Nhận biết", q: "Tập hợp các cá thể cùng loài, cùng sống trong một khoảng không gian và thời gian xác định có khả năng sinh sản gọi là:", a: "Quần thể sinh vật", b: "Quần xã sinh vật", c: "Hệ sinh thái", d: "Sinh quyển", correct: "A", exp: "Định nghĩa Quần thể sinh vật (cùng loài, cùng không gian, thời gian, giao phối sinh ra con)." },
+      { id: 37, topic: "Sinh thái", level: "Nhận biết", q: "Khoảng giá trị của một nhân tố sinh thái mà ở đó sinh vật tồn tại và phát triển ổn định theo thời gian gọi là:", a: "Ổ sinh thái", b: "Giới hạn sinh thái", c: "Khoảng chống chịu", d: "Khoảng thuận lợi", correct: "B", exp: "Giới hạn sinh thái là khoảng giá trị của nhân tố sinh thái giúp sinh vật tồn tại." },
+      { id: 38, topic: "Sinh thái", level: "Thông hiểu", q: "Quan hệ giữa cây tầm gửi sống trên thân cây gỗ là mối quan hệ gì?", a: "Cộng sinh", b: "Ký sinh", c: "Hội sinh", d: "Cạnh tranh", correct: "B", exp: "Tầm gửi hút nước và chất dinh dưỡng từ cây chủ -> Quan hệ Ký sinh." },
+      { id: 39, topic: "Sinh thái", level: "Nhận biết", q: "Mối quan hệ giữa vi khuẩn cố định đạm (Rhizobium) và rễ cây họ Đậu là:", a: "Cộng sinh", b: "Hợp tác", c: "Hội sinh", d: "Ức chế - cảm nhiễm", correct: "A", exp: "Cả 2 bên đều có lợi và bắt buộc phải có nhau -> Quan hệ Cộng sinh." },
+      { id: 40, topic: "Sinh thái", level: "Nhận biết", q: "Mối quan hệ giữa phong lan bám trên thân cây gỗ lớn là:", a: "Hội sinh", b: "Cộng sinh", c: "Ký sinh", d: "Con mồi - vật ăn thịt", correct: "A", exp: "Phong lan có lợi (có chỗ bám), cây gỗ không có lợi cũng không hại -> Quan hệ Hội sinh." },
+      { id: 41, topic: "Sinh thái", level: "Thông hiểu", q: "Hiện tượng khống chế sinh học trong quần xã dẫn đến trạng thái nào?", a: "Cân bằng sinh học", b: "Diệt vong quần thể", c: "Diễn thế suy thoái", d: "Ô nhiễm môi trường", correct: "A", exp: "Khống chế sinh học giữ cho số lượng cá thể dao động quanh mức cân bằng." },
+      { id: 42, topic: "Sinh thái", level: "Nhận biết", q: "Trong một chuỗi thức ăn, sinh vật nào đứng đầu chuỗi thức ăn khởi đầu bằng sinh vật tự dưỡng?", a: "Sinh vật tiêu thụ bậc 1", b: "Sinh vật sản xuất", c: "Sinh vật phân giải", d: "Sinh vật ăn thịt", correct: "B", exp: "Sinh vật sản xuất (cây xanh, tảo) đứng đầu chuỗi thức ăn tự dưỡng." },
+      { id: 43, topic: "Sinh thái", level: "Nhận biết", q: "Trong hệ sinh thái, thành phần nào đóng vai trò biến đổi chất hữu cơ thành các chất vô cơ?", a: "Sinh vật phân giải", b: "Sinh vật sản xuất", c: "Sinh vật tiêu thụ", d: "Các chất khí", correct: "A", exp: "Sinh vật phân giải (vi khuẩn, nấm) phân hủy chất hữu cơ trả lại vô cơ cho môi trường." },
+      { id: 44, topic: "Sinh thái", level: "Thông hiểu", q: "Năng lượng được truyền trong hệ sinh thái theo chiều nào?", a: "Xoay vòng khép kín", b: "Một chiều từ SV sản xuất qua các bậc dinh dưỡng rồi thoát ra môi trường", c: "Từ sinh vật phân giải ngược về SV sản xuất", d: "Ngẫu nhiên", correct: "B", exp: "Dòng năng lượng đi theo một chiều và bị thất thoát qua mỗi bậc dinh dưỡng dạng nhiệt." },
+      { id: 45, topic: "Sinh thái", level: "Nhận biết", q: "Quá trình biến đổi tuần tự của quần xã sinh vật theo thời gian gọi là:", a: "Diễn thế sinh thái", b: "Phân tầng sinh thái", c: "Biến động quần thể", d: "Tiến hóa sinh thái", correct: "A", exp: "Định nghĩa Diễn thế sinh thái." },
+      { id: 46, topic: "Sinh thái", level: "Nhận biết", q: "Diễn thế sinh thái khởi đầu từ một môi trường trống trọc (chưa có sinh vật) là:", a: "Diễn thế thứ sinh", b: "Diễn thế nguyên sinh", c: "Diễn thế phân hủy", d: "Diễn thế phục hồi", correct: "B", exp: "Diễn thế nguyên sinh bắt đầu từ môi trường trống trọc." },
+      { id: 47, topic: "Sinh thái", level: "Thông hiểu", q: "Tháp sinh thái nào sau đây luôn có dạng chuẩn (đáy rộng, đỉnh nhọn)?", a: "Tháp số lượng", b: "Tháp sinh khối", c: "Tháp năng lượng", d: "Tháp tuổi", correct: "C", exp: "Tháp năng lượng luôn có hình tháp chuẩn vì năng lượng tiêu hao qua từng bậc." },
+      { id: 48, topic: "Sinh thái", level: "Nhận biết", q: "Kích thước tối thiểu của quần thể là gì?", a: "Số lượng cá thể ít nhất mà quần thể cần có để duy trì sự tồn tại", b: "Số cá thể tối đa môi trường cung cấp đủ thức ăn", c: "Số cá thể sinh ra trong 1 năm", d: "Số lượng cá thể tử vong trong mùa mưa", correct: "A", exp: "Kích thước tối thiểu là số cá thể ít nhất để quần thể không rơi vào suy thoái và tuyệt chủng." },
+      { id: 49, topic: "Sinh thái", level: "Thông hiểu", q: "Hình thức phân bố cá thể phổ biến nhất trong tự nhiên của quần thể là:", a: "Phân bố đồng đều", b: "Phân bố theo nhóm", c: "Phân bố ngẫu nhiên", d: "Phân bố ngắt quãng", correct: "B", exp: "Phân bố theo nhóm là phổ biến nhất (do điều kiện sống không đồng đều, cá thể tụ họp)." },
+      { id: 50, topic: "Sinh thái", level: "Nhận biết", q: "Sinh quyển bao gồm những bộ phận nào?", a: "Thạch quyển, Thủy quyển và Khí quyển", b: "Chỉ bao gồm các đại dương", c: "Chỉ gồm tầng đối lưu", d: "Lòng đất sâu 100km", correct: "A", exp: "Sinh quyển bao gồm toàn bộ phần thạch quyển, thủy quyển và khí quyển có sinh vật sống." }
+    ];
+
+    // 10 CÂU ĐÚNG / SAI
+    const tfBank = [
+      {
+        id: 1,
+        title: "Tình huống 1: Cơ chế dịch mã",
+        desc: "Cho thông tin về quá trình tổng hợp chuỗi polypeptide trong tế bào nhân thực.",
+        statements: [
+          { text: "a) Ribosome di chuyển trên mARN theo chiều từ 3' đến 5'.", correct: false, exp: "Sai. Ribosome trượt trên mARN theo chiều 5' -> 3'." },
+          { text: "b) Mã bộ ba mở đầu 5'AUG3' quy định amino acid Methionine.", correct: true, exp: "Đúng." },
+          { text: "c) tARN mang anticodon đến khớp bổ sung với codon trên mARN.", correct: true, exp: "Đúng." },
+          { text: "d) Quá trình dịch mã dừng lại khi Ribosome tiếp xúc bộ ba 5'UAA3', 5'UAG3' hoặc 5'UGA3'.", correct: true, exp: "Đúng." }
+        ]
+      },
+      {
+        id: 2,
+        title: "Tình huống 2: Đột biến nhiễm sắc thể ở người",
+        desc: "Phân tích một bộ NST của bệnh nhân có 47 nhiễm sắc thể, trong đó cặp NST 21 có 3 chiếc.",
+        statements: [
+          { text: "a) Bệnh nhân mắc hội chứng Clainfenter.", correct: false, exp: "Sai. Đây là hội chứng Đao (Down)." },
+          { text: "b) Đây là đột biến thể ba (2n + 1).", correct: true, exp: "Đúng." },
+          { text: "c) Đột biến xảy ra do sự không phân ly cặp NST 21 trong giảm phân.", correct: true, exp: "Đúng." },
+          { text: "d) Bệnh này chỉ xuất hiện ở nam giới, không gặp ở nữ giới.", correct: false, exp: "Sai. Hội chứng Đao gặp ở cả nam và nữ." }
+        ]
+      },
+      {
+        id: 3,
+        title: "Tình huống 3: Di truyền học Mendell",
+        desc: "Xét phép lai AaBb x AaBb ở một loài thực vật (các gen phân ly độc lập, trội hoàn toàn).",
+        statements: [
+          { text: "a) Tỷ lệ kiểu hình mang 2 tính trạng trội ở F1 là 9/16.", correct: true, exp: "Đúng (9/16 A-B-)." },
+          { text: "b) Có tối đa 9 loại kiểu gen khác nhau tạo thành ở F1.", correct: true, exp: "Đúng (3 x 3 = 9 loại kiểu gen)." },
+          { text: "c) Tỷ lệ cá thể thuần chủng (AABB, AAbb, aaBB, aabb) là 1/4.", correct: true, exp: "Đúng (1/16 x 4 = 4/16 = 1/4)." },
+          { text: "d) Tỷ lệ kiểu hình lặn về cả 2 tính trạng (aabb) là 3/16.", correct: false, exp: "Sai. Tỷ lệ aabb là 1/16." }
+        ]
+      },
+      {
+        id: 4,
+        title: "Tình huống 4: Quần thể di truyền",
+        desc: "Một quần thể đậu Hà Lan tự thụ phấn nghiêm ngặt có P: 100% Aa.",
+        statements: [
+          { text: "a) Qua các thế hệ, tỷ lệ kiểu gen dị hợp (Aa) giảm dần.", correct: true, exp: "Đúng." },
+          { text: "b) Tỷ lệ kiểu gen đồng hợp (AA và aa) tăng dần.", correct: true, exp: "Đúng." },
+          { text: "c) Tần số allele A và a thay đổi liên tục qua các thế hệ.", correct: false, exp: "Sai. Tự thụ phấn không làm thay đổi tần số allele A và a." },
+          { text: "d) Ở F3, tỷ lệ kiểu gen Aa là 1/8.", correct: true, exp: "Đúng ((1/2)^3 = 1/8)." }
+        ]
+      },
+      {
+        id: 5,
+        title: "Tình huống 5: Các nhân tố tiến hóa",
+        desc: "Phân tích tác động của Chọn lọc tự nhiên (CLTN) và Yếu tố ngẫu nhiên (YTNN).",
+        statements: [
+          { text: "a) CLTN luôn làm tăng đa dạng di truyền của quần thể.", correct: false, exp: "Sai. CLTN đào thải cá thể kém thích nghi nên làm giảm biến dị có hại." },
+          { text: "b) YTNN có thể đào thải hoàn toàn một allele có lợi ra khỏi quần thể.", correct: true, exp: "Đúng." },
+          { text: "c) Cả CLTN và YTNN đều là nhân tố tiến hóa có hướng.", correct: false, exp: "Sai. Chỉ CLTN mới có hướng xác định." },
+          { text: "d) Đột biến gen là nguồn nguyên liệu sơ cấp của quá trình tiến hóa.", correct: true, exp: "Đúng." }
+        ]
+      },
+      {
+        id: 6,
+        title: "Tình huống 6: Bằng chứng tiến hóa",
+        desc: "Nghiên cứu cấu tạo giải phẫu so sánh giữa các loài sinh vật.",
+        statements: [
+          { text: "a) Cánh chim và cánh bướm là hai cơ quan tương đồng.", correct: false, exp: "Sai. Đây là cơ quan tương tự (khác nguồn gốc, cùng chức năng)." },
+          { text: "b) Chi trước của chó và vây ngực của cá bống là cơ quan tương đồng.", correct: true, exp: "Đúng." },
+          { text: "c) Cơ quan thoái hóa cũng là một dạng cơ quan tương đồng.", correct: true, exp: "Đúng (do di vết cơ quan của tổ tiên phát triển)." },
+          { text: "d) Bằng chứng sinh học phân tử là bằng chứng trực tiếp nhất.", correct: false, exp: "Sai. Hóa thạch mới là bằng chứng trực tiếp." }
+        ]
+      },
+      {
+        id: 7,
+        title: "Tình huống 7: Kích thước và phân bố quần thể",
+        desc: "Quan sát một quần thể chim trĩ trong khu bảo tồn thiên nhiên.",
+        statements: [
+          { text: "a) Phân bố ngẫu nhiên là dạng phân bố phổ biến nhất trong tự nhiên.", correct: false, exp: "Sai. Phân bố theo nhóm phổ biến nhất." },
+          { text: "b) Khi kích thước quần thể xuống dưới mức tối thiểu, quần thể dễ bị diệt vong.", correct: true, exp: "Đúng." },
+          { text: "c) Cạnh tranh cùng loài giúp duy trì số lượng cá thể ở mức phù hợp.", correct: true, exp: "Đúng." },
+          { text: "d) Tỷ lệ giới tính trong quần thể luôn luôn là 1 nam : 1 nữ ở mọi thời điểm.", correct: false, exp: "Sai. Tỷ lệ biến đổi tùy loài và điều kiện môi trường." }
+        ]
+      },
+      {
+        id: 8,
+        title: "Tình huống 8: Chuỗi và lưới thức ăn",
+        desc: "Cho chuỗi thức ăn: Cỏ -> Sâu ăn lá -> Chim sâu -> Rắn -> Đại bàng.",
+        statements: [
+          { text: "a) Cỏ là sinh vật sản xuất.", correct: true, exp: "Đúng." },
+          { text: "b) Chim sâu thuộc bậc dinh dưỡng cấp 2.", correct: false, exp: "Sai. Cỏ (BDC 1) -> Sâu (BDC 2) -> Chim sâu (BDC 3)." },
+          { text: "c) Rắn là sinh vật tiêu thụ bậc 3.", correct: true, exp: "Đúng." },
+          { text: "d) Nếu loại bỏ hoàn toàn chim sâu, số lượng sâu ăn lá chắc chắn sẽ tăng trong thời gian đầu.", correct: true, exp: "Đúng." }
+        ]
+      },
+      {
+        id: 9,
+        title: "Tình huống 9: Diễn thế sinh thái",
+        desc: "Quá trình phục hồi rừng sau khi bị cháy hoàn toàn.",
+        statements: [
+          { text: "a) Đây là quá trình diễn thế nguyên sinh.", correct: false, exp: "Sai. Đây là diễn thế thứ sinh (bắt đầu từ đất đã có sẵn hạt/mầm)." },
+          { text: "b) Giai đoạn đầu sẽ xuất hiện các loài sinh vật tiên phong.", correct: true, exp: "Đúng." },
+          { text: "c) Kết quả của diễn thế thứ sinh có thể dẫn đến quần xã đỉnh cực hoặc bị suy thoái.", correct: true, exp: "Đúng." },
+          { text: "d) Hoạt động của con người là một trong những nguyên nhân quan trọng gây ra diễn thế.", correct: true, exp: "Đúng." }
+        ]
+      },
+      {
+        id: 10,
+        title: "Tình huống 10: Công nghệ gen",
+        desc: "Quy trình sản xuất Insulin người bằng cách đưa gen vào vi khuẩn E.coli.",
+        statements: [
+          { text: "a) Plasmid được sử dụng làm thể truyền gen.", correct: true, exp: "Đúng." },
+          { text: "b) Enzyme Ligase được dùng để cắt đoạn gen mong muốn.", correct: false, exp: "Sai. Enzyme cắt là Restriction; Ligase dùng để nối." },
+          { text: "c) Phân tử ADN mang gen người gắn với ADN plasmid gọi là ADN tái tổ hợp.", correct: true, exp: "Đúng." },
+          { text: "d) Vi khuẩn E.coli được chọn vì chúng nhân lên rất nhanh.", correct: true, exp: "Đúng." }
+        ]
+      }
+    ];
+
+    // 10 CÂU TRẢ LỜI NGẮN
+    const shortBank = [
+      { id: 1, q: "Một phân tử ADN nhân đôi 3 lần liên tiếp sẽ tạo ra bao nhiêu phân tử ADN con?", ref: "8", exp: "Số ADN con = 2^3 = 8 phân tử." },
+      { id: 2, q: "Có bao nhiêu bộ ba mã hóa amino acid trong tổng số 64 bộ ba mã di truyền?", ref: "61", exp: "Trong 64 bộ ba có 3 bộ ba kết thúc (UAA, UAG, UGA) không mã hóa amino acid -> Còn 61 bộ ba." },
+      { id: 3, q: "Một gen có 1200 cặp nucleotide. Số bộ ba mã hóa trên mARN do gen này tổng hợp là bao nhiêu?", ref: "400", exp: "Số bộ ba = 1200 / 3 = 400 bộ ba." },
+      { id: 4, q: "Ở người, người mắc hội chứng Tơcnơ (Turner) có bao nhiêu nhiễm sắc thể trong tế bào sinh dưỡng?", ref: "45", exp: "Hội chứng Turner là thể một ở cặp NST giới tính (XO) -> 2n - 1 = 45 NST." },
+      { id: 5, q: "Có bao nhiêu nhân tố tiến hóa trong số 5 nhân tố theo học thuyết hiện đại làm thay đổi tần số allele theo một hướng xác định?", ref: "1", exp: "Chỉ có 1 nhân tố là Chọn lọc tự nhiên quy định chiều hướng tiến hóa." },
+      { id: 6, q: "Nhóm sinh vật nào đóng vai trò khởi đầu cho chuỗi thức ăn tự dưỡng?", ref: "Sinh vật sản xuất (hoặc Cây xanh / Tảo)", exp: "Sinh vật sản xuất thực hiện quang hợp tạo chất hữu cơ cho hệ sinh thái." },
+      { id: 7, q: "Bộ nhiễm sắc thể lưỡng bội của loài người bình thường là bao nhiêu?", ref: "46", exp: "Bộ NST 2n của người = 46 (23 cặp)." },
+      { id: 8, q: "Điền từ còn thiếu: 'Cơ quan ... là những cơ quan có cùng nguồn gốc phôi sinh nhưng khác nhau về chức năng'.", ref: "tương đồng", exp: "Định nghĩa cơ quan tương đồng." },
+      { id: 9, topic: "Sinh thái", q: "Khi năng lượng truyền qua các bậc dinh dưỡng, trung bình khoảng bao nhiêu % năng lượng bị thất thoát qua mỗi bậc?", ref: "90%", exp: "Hiệu suất sinh thái chỉ khoảng 10%, năng lượng thất thoát thoát ra dạng nhiệt là khoảng 90%." },
+      { id: 10, q: "Enzyme nào đóng vai trò dán/nối các đoạn ADN lại với nhau trong công nghệ gen?", ref: "Ligase", exp: "Enzyme Ligase làm nhiệm vụ nối các liên kết phosphodiester." }
+    ];
+
+    /* =========================================================
+       2. APP STATE & NAVIGATION
+       ========================================================= */
+    let currentQuizQuestions = [];
+    let userAnswers = {};
+    let currentQuestionIndex = 0;
+    let timerInterval = null;
+    let timeRemaining = 0;
+    let quizStartTime = null;
+
+    function switchSection(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const targetSec = document.getElementById(sectionId);
+      if(targetSec) targetSec.classList.add('active');
+
+      const btns = document.querySelectorAll('.nav-btn');
+      btns.forEach(btn => {
+        if(btn.getAttribute('onclick').includes(sectionId)) {
+          btn.classList.add('active');
+        }
+      });
+
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function toggleDetail(id) {
+      const el = document.getElementById(id);
+      if(el) el.classList.toggle('active');
+    }
+
+    function filterKnowledge() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    /* =========================================================
+       3. QUIZ & EXAM LOGIC
+       ========================================================= */
+    function shuffleArray(array) {
+      let arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz() {
+      const count = parseInt(document.getElementById('quizCount').value);
+      const minutes = parseInt(document.getElementById('quizTime').value);
+      initQuizSession(count, minutes);
+    }
+
+    function startExam(count, minutes) {
+      switchSection('quiz');
+      document.getElementById('quizCount').value = count;
+      document.getElementById('quizTime').value = minutes;
+      initQuizSession(count, minutes);
+    }
+
+    function initQuizSession(count, minutes) {
+      // Pick random questions without repeating
+      const shuffled = shuffleArray(mcqBank);
+      currentQuizQuestions = shuffled.slice(0, Math.min(count, mcqBank.length));
+      userAnswers = {};
+      currentQuestionIndex = 0;
+      quizStartTime = new Date();
+
+      document.getElementById('quizDisplay').style.display = 'block';
+      
+      // Timer setup
+      clearInterval(timerInterval);
+      const timerBadge = document.getElementById('quizTimer');
+      if (minutes > 0) {
+        timeRemaining = minutes * 60;
+        timerBadge.style.display = 'inline-flex';
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+          timeRemaining--;
+          updateTimerDisplay();
+          if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert("Đã hết thời gian làm bài! Hệ thống sẽ tự động nộp bài.");
+            submitQuiz();
+          }
+        }, 1000);
+      } else {
+        timerBadge.style.display = 'none';
+      }
+
+      renderQuestion();
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(timeRemaining / 60);
+      const s = timeRemaining % 60;
+      document.getElementById('quizTimer').innerText = `⏱️ ${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+    }
+
+    function renderQuestion() {
+      const q = currentQuizQuestions[currentQuestionIndex];
+      document.getElementById('quizProgress').innerText = `Câu ${currentQuestionIndex + 1} / ${currentQuizQuestions.length}`;
+      document.getElementById('qLevel').innerText = `Mức độ: ${q.level}`;
+      document.getElementById('qTopic').innerText = `Chủ đề: ${q.topic}`;
+      document.getElementById('qText').innerText = q.q;
+
+      const optsContainer = document.getElementById('qOptions');
+      optsContainer.innerHTML = '';
+
+      const options = [
+        { key: 'A', text: q.a },
+        { key: 'B', text: q.b },
+        { key: 'C', text: q.c },
+        { key: 'D', text: q.d }
+      ];
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        if (userAnswers[currentQuestionIndex] === opt.key) {
+          btn.classList.add('selected');
+        }
+        btn.innerHTML = `<strong>${opt.key}.</strong> &nbsp; ${opt.text}`;
+        btn.onclick = () => selectOption(opt.key);
+        optsContainer.appendChild(btn);
+      });
+
+      document.getElementById('btnPrev').style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+      document.getElementById('btnNext').innerText = (currentQuestionIndex === currentQuizQuestions.length - 1) ? 'Đến câu cuối' : 'Câu tiếp theo';
+    }
+
+    function selectOption(key) {
+      userAnswers[currentQuestionIndex] = key;
+      renderQuestion();
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < currentQuizQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      }
+    }
+
+    function confirmSubmitQuiz() {
+      const unanswered = currentQuizQuestions.length - Object.keys(userAnswers).length;
+      let msg = "Bạn có chắc chắn muốn nộp bài?";
+      if (unanswered > 0) {
+        msg = `Bạn còn ${unanswered} câu chưa trả lời. ` + msg;
+      }
+      if (confirm(msg)) {
+        submitQuiz();
+      }
+    }
+
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      let correctCount = 0;
+
+      currentQuizQuestions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const total = currentQuizQuestions.length;
+      const score = ((correctCount / total) * 10).toFixed(1);
+      const percent = Math.round((correctCount / total) * 100);
+
+      // Render Result UI
+      document.getElementById('scoreDisplay').innerText = score;
+      document.getElementById('scoreStats').innerText = `Đúng ${correctCount} / ${total} câu`;
+      document.getElementById('scorePercent').innerText = `Tỷ lệ đúng: ${percent}%`;
+      document.getElementById('resultTimeText').innerText = `Thời gian hoàn thành: ${new Date().toLocaleTimeString('vi-VN')} - ngày ${new Date().toLocaleDateString('vi-VN')}`;
+
+      // Feedback Text
+      const fbBox = document.getElementById('feedbackBox');
+      if (score >= 8.0) {
+        fbBox.className = "feedback-box";
+        fbBox.style.background = "#d4edda"; fbBox.style.color = "#155724";
+        fbBox.innerText = "Em đã nắm khá vững kiến thức. Hãy tiếp tục luyện các câu hỏi vận dụng.";
+      } else if (score >= 6.5) {
+        fbBox.className = "feedback-box";
+        fbBox.style.background = "#cce5ff"; fbBox.style.color = "#004085";
+        fbBox.innerText = "Em có nền tảng khá tốt. Hãy củng cố thêm những nội dung còn chưa chắc.";
+      } else if (score >= 5.0) {
+        fbBox.className = "feedback-box";
+        fbBox.style.background = "#fff3cd"; fbBox.style.color = "#856404";
+        fbBox.innerText = "Em cần ôn lại kiến thức trọng tâm và luyện thêm câu hỏi.";
+      } else {
+        fbBox.className = "feedback-box";
+        fbBox.style.background = "#f8d7da"; fbBox.style.color = "#721c24";
+        fbBox.innerText = "Em nên học lại kiến thức nền tảng trước khi tiếp tục luyện đề.";
+      }
+
+      // Render Review Details
+      const revContainer = document.getElementById('reviewContainer');
+      revContainer.innerHTML = '';
+
+      currentQuizQuestions.forEach((q, idx) => {
+        const uAns = userAnswers[idx] || "Chưa chọn";
+        const isCorrect = uAns === q.correct;
+
+        const div = document.createElement('div');
+        div.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+        div.innerHTML = `
+          <strong>Câu ${idx + 1}: ${q.q}</strong><br>
+          <span style="color: ${isCorrect ? 'var(--success)' : 'var(--danger)'};">
+            • Bạn chọn: <strong>${uAns}</strong> ${isCorrect ? '✓' : '✗'}
+          </span><br>
+          <span style="color: var(--primary-dark);">• Đáp án đúng: <strong>${q.correct}</strong> (${q[q.correct.toLowerCase()]})</span>
+          <div class="explanation">💡 <strong>Giải thích:</strong> ${q.exp}</div>
+        `;
+        revContainer.appendChild(div);
+      });
+
+      switchSection('result');
+    }
+
+    function restartCurrentQuiz() {
+      if(currentQuizQuestions.length > 0) {
+        switchSection('quiz');
+        initQuizSession(currentQuizQuestions.length, parseInt(document.getElementById('quizTime').value));
+      } else {
+        switchSection('quiz');
+      }
+    }
+
+    /* =========================================================
+       4. TRUE / FALSE SECTION LOGIC
+       ========================================================= */
+    function renderTFSection() {
+      const container = document.getElementById('tfContainer');
+      container.innerHTML = '';
+
+      tfBank.forEach((item, tIdx) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        let html = `<h3>${item.title}</h3><p style="color:#555; margin-bottom:10px;">${item.desc}</p>`;
+
+        item.statements.forEach((st, sIdx) => {
+          html += `
+            <div class="tf-item">
+              <div><strong>${st.text}</strong></div>
+              <div class="tf-options">
+                <label class="tf-label"><input type="radio" name="tf_${tIdx}_${sIdx}" value="true"> Đúng</label>
+                <label class="tf-label"><input type="radio" name="tf_${tIdx}_${sIdx}" value="false"> Sai</label>
+              </div>
+              <div id="tf_exp_${tIdx}_${sIdx}" class="explanation" style="display:none;"></div>
+            </div>
+          `;
+        });
+        card.innerHTML = html;
+        container.appendChild(card);
+      });
+    }
+
+    function gradeTF() {
+      let totalStatements = 0;
+      let correctStatements = 0;
+
+      tfBank.forEach((item, tIdx) => {
+        item.statements.forEach((st, sIdx) => {
+          totalStatements++;
+          const selected = document.querySelector(`input[name="tf_${tIdx}_${sIdx}"]:checked`);
+          const expDiv = document.getElementById(`tf_exp_${tIdx}_${sIdx}`);
+          expDiv.style.display = 'block';
+
+          if (selected) {
+            const val = (selected.value === 'true');
+            if (val === st.correct) {
+              correctStatements++;
+              expDiv.innerHTML = `<span style="color:green;">✓ Đúng rồi!</span> ${st.exp}`;
+            } else {
+              expDiv.innerHTML = `<span style="color:red;">✗ Chưa chính xác.</span> Đáp án đúng: <strong>${st.correct ? 'Đúng' : 'Sai'}</strong>. ${st.exp}`;
             }
-        ];
+          } else {
+            expDiv.innerHTML = `<span style="color:orange;">⚠️ Bạn chưa chọn.</span> Đáp án đúng: <strong>${st.correct ? 'Đúng' : 'Sai'}</strong>. ${st.exp}`;
+          }
+        });
+      });
 
-        const saData = [
-            { q: "Một gen có 1200 cặp nucleotide. Số bộ ba mã hóa trên phân tử mRNA được tổng hợp từ gen này là bao nhiêu? (Chỉ điền số)", ans: "400", exp: "Số bộ ba = Tổng số nucleotide / (2 * 3) = 2400 / 6 = 400 bộ ba." },
-            { q: "Ở một loài thực vật, A quy định hạt vàng trội hoàn toàn so với a quy định hạt xanh. Cho cây Aa tự thụ phấn, tỉ lệ kiểu hình hạt vàng thu được ở F1 là bao nhiêu %? (Chỉ điền số, ví dụ: 50)", ans: "75", exp: "Aa x Aa -> 1AA : 2Aa : 1aa. Kiểu hình vàng (A-) chiếm 3/4 = 75%." },
-            { q: "Một loài sinh vật có bộ nhiễm sắc thể lưỡng bội 2n = 24. Số nhiễm sắc thể có trong một tế bào thể một (2n - 1) của loài này là bao nhiêu? (Chỉ điền số)", ans: "23", exp: "Thể một có công thức 2n - 1 = 24 - 1 = 23 NST." }
-        ];
+      alert(`Kết quả Đúng/Sai: Đúng ${correctStatements} / ${totalStatements} mệnh đề.`);
+    }
 
-        // Khởi tạo giao diện câu hỏi
-        function initQuiz() {
-            // Render MCQ
-            const mcqContainer = document.getElementById('mcq-container');
-            mcqData.forEach((d, i) => {
-                let html = `<div class="question-box" id="mcq-q${i}">
-                    <div class="question-title">Câu ${i+1}: ${d.q}</div>
-                    <div class="options">`;
-                d.options.forEach((opt, idx) => {
-                    html += `<label><input type="radio" name="mcq_${i}" value="${idx}"> ${opt}</label>`;
-                });
-                html += `</div><div class="explanation" id="mcq-exp-${i}"><b>Giải thích:</b> ${d.exp}</div></div>`;
-                mcqContainer.innerHTML += html;
-            });
+    /* =========================================================
+       5. SHORT ANSWER SECTION LOGIC
+       ========================================================= */
+    function renderShortSection() {
+      const container = document.getElementById('shortContainer');
+      container.innerHTML = '';
 
-            // Render True/False
-            const tfContainer = document.getElementById('tf-container');
-            tfData.forEach((d, i) => {
-                let html = `<div class="question-box" id="tf-q${i}">
-                    <div class="question-title">Câu ${mcqData.length + i + 1}: ${d.q}</div>
-                    <table class="tf-table">
-                        <tr><th>Phát biểu</th><th>Đúng</th><th>Sai</th></tr>`;
-                d.items.forEach((item, idx) => {
-                    html += `<tr>
-                        <td>${item.text}</td>
-                        <td><input type="radio" name="tf_${i}_${idx}" value="true"></td>
-                        <td><input type="radio" name="tf_${i}_${idx}" value="false"></td>
-                    </tr>`;
-                });
-                html += `</table><div class="explanation" id="tf-exp-${i}"><b>Giải thích:</b> ${d.exp}</div></div>`;
-                tfContainer.innerHTML += html;
-            });
+      shortBank.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'short-item';
+        div.innerHTML = `
+          <strong>Câu ${idx + 1}: ${item.q}</strong>
+          <input type="text" id="short_input_${idx}" placeholder="Nhập câu trả lời của bạn vào đây...">
+          <div id="short_exp_${idx}" class="explanation" style="display:none; margin-top:10px;">
+            <strong>Đáp án tham khảo:</strong> <span style="color:var(--primary); font-weight:bold;">${item.ref}</span><br>
+            💡 <strong>Giải thích:</strong> ${item.exp}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
 
-            // Render Short Answer
-            const saContainer = document.getElementById('sa-container');
-            const startIndex = mcqData.length + tfData.length;
-            saData.forEach((d, i) => {
-                let html = `<div class="question-box" id="sa-q${i}">
-                    <div class="question-title">Câu ${startIndex + i + 1}: ${d.q}</div>
-                    <input type="text" name="sa_${i}" placeholder="Nhập đáp án của bạn...">
-                    <div class="explanation" id="sa-exp-${i}"><b>Đáp án đúng:</b> ${d.ans}. <br><b>Giải thích:</b> ${d.exp}</div>
-                </div>`;
-                saContainer.innerHTML += html;
-            });
-        }
+    function checkShortAnswers() {
+      shortBank.forEach((item, idx) => {
+        const expDiv = document.getElementById(`short_exp_${idx}`);
+        expDiv.style.display = 'block';
+      });
+      alert("Đã hiển thị đáp án tham khảo và giải thích chi tiết. Học viên hãy tự đối chiếu với bài làm của mình!");
+    }
 
-        // Đổi tab
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // Chấm điểm
-        function gradeQuiz() {
-            let score = 0;
-            let totalQuestions = mcqData.length + tfData.length + saData.length;
-
-            // Chấm MCQ
-            mcqData.forEach((d, i) => {
-                const selected = document.querySelector(`input[name="mcq_${i}"]:checked`);
-                const expEl = document.getElementById(`mcq-exp-${i}`);
-                expEl.style.display = 'block';
-                if (selected && parseInt(selected.value) === d.ans) {
-                    score++;
-                    expEl.classList.add('correct');
-                } else {
-                    expEl.classList.add('incorrect');
-                }
-            });
-
-            // Chấm True/False
-            tfData.forEach((d, i) => {
-                let allCorrect = true;
-                d.items.forEach((item, idx) => {
-                    const selected = document.querySelector(`input[name="tf_${i}_${idx}"]:checked`);
-                    if (!selected || (selected.value === 'true') !== item.ans) {
-                        allCorrect = false;
-                    }
-                });
-                const expEl = document.getElementById(`tf-exp-${i}`);
-                expEl.style.display = 'block';
-                if (allCorrect) {
-                    score++;
-                    expEl.classList.add('correct');
-                } else {
-                    expEl.classList.add('incorrect');
-                }
-            });
-
-            // Chấm Short Answer
-            saData.forEach((d, i) => {
-                const input = document.querySelector(`input[name="sa_${i}"]`);
-                const expEl = document.getElementById(`sa-exp-${i}`);
-                expEl.style.display = 'block';
-                if (input && input.value.trim().toLowerCase() === d.ans.toLowerCase()) {
-                    score++;
-                    expEl.classList.add('correct');
-                } else {
-                    expEl.classList.add('incorrect');
-                }
-            });
-
-            // Hiển thị kết quả
-            const finalScore = (score / totalQuestions * 10).toFixed(1);
-            const resultBox = document.getElementById('resultBox');
-            resultBox.style.display = 'block';
-            resultBox.innerHTML = `Điểm của bạn: <span style="color: var(--primary); font-size: 1.5rem;">${finalScore}/10</span> (${score}/${totalQuestions} câu đúng)`;
-            resultBox.style.backgroundColor = finalScore >= 5 ? '#e8f5e9' : '#ffebee';
-
-            // Ẩn/Hiện nút
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('resetBtn').style.display = 'block';
-
-            // Cuộn lên đầu trang kết quả
-            resultBox.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Làm lại bài
-        function resetQuiz() {
-            document.getElementById('quizForm').reset();
-            document.querySelectorAll('.explanation').forEach(el => {
-                el.style.display = 'none';
-                el.classList.remove('correct', 'incorrect');
-            });
-            document.getElementById('resultBox').style.display = 'none';
-            document.getElementById('submitBtn').style.display = 'block';
-            document.getElementById('resetBtn').style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Chạy khởi tạo khi tải trang
-        window.onload = initQuiz;
-    </script>
+    /* =========================================================
+       INIT ON LOAD
+       ========================================================= */
+    window.onload = function() {
+      renderTFSection();
+      renderShortSection();
+    };
+  </script>
 </body>
 </html>
