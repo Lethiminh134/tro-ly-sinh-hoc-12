@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Sinh Học 12 - GDTX</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --secondary: #0288d1;
+            --bg: #f4f6f8;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --success: #388e3c;
+            --error: #d32f2f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover, nav button.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 0.5rem;
+        }
+
+        .question-box {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .options label {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            transition: background 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .options input[type="radio"], .options input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+
+        .tf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .tf-table th, .tf-table td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .tf-table td:first-child {
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit, .btn-reset {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-reset {
+            background-color: var(--secondary);
+            display: none;
+        }
+
+        .result-box {
+            display: none;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .correct { color: var(--success); font-weight: bold; }
+        .incorrect { color: var(--error); font-weight: bold; }
+
+        @media (max-width: 600px) {
+            nav { flex-direction: column; }
+            nav button { width: 100%; text-align: center; padding: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ÔN TẬP SINH HỌC 12 - GDTX</h1>
+        <p>Hệ thống kiến thức & Luyện tập trắc nghiệm hiệu quả</p>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('home')">Trang Chủ</button>
+        <button class="nav-btn" onclick="switchTab('theory')">Kiến Thức Trọng Tâm</button>
+        <button class="nav-btn" onclick="switchTab('quiz')">Luyện Tập Trắc Nghiệm</button>
+    </nav>
+
+    <div class="container">
+        <!-- TRANG CHỦ -->
+        <div id="home" class="tab-content active">
+            <div class="card">
+                <h2>Chào mừng các học viên GDTX!</h2>
+                <p>Website được thiết kế nhằm hỗ trợ học viên hệ GDTX ôn tập kiến thức Sinh học 12 nhanh chóng, nắm chắc trọng tâm và tự luyện tập làm bài trắc nghiệm.</p>
+                <br>
+                <h3>Hướng dẫn học tập:</h3>
+                <ul>
+                    <li><strong>Bước 1:</strong> Chọn tab <b>"Kiến Thức Trọng Tâm"</b> để đọc và ghi nhớ các khái niệm cốt lõi.</li>
+                    <li><strong>Bước 2:</strong> Chuyển sang tab <b>"Luyện Tập Trắc Nghiệm"</b> để hoàn thành bộ câu hỏi.</li>
+                    <li><strong>Bước 3:</strong> Nhấn <b>"Nộp bài"</b> để xem điểm, kiểm tra đáp án và đọc giải thích chi tiết.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- KIẾN THỨC TRỌNG TÂM -->
+        <div id="theory" class="tab-content">
+            <div class="card">
+                <h2>1. Gen, Mã Di Truyền và Nhân Đôi DNA</h2>
+                <p><b>- Gen:</b> Là một đoạn của phân tử DNA mang thông tin mã hóa cho một sản phẩm xác định (chuỗi polypeptide hoặc RNA).</p>
+                <p><b>- Mã di truyền:</b> Là mã bộ ba (3 nucleotide kế tiếp nhau mã hóa cho 1 amino acid). Có 64 bộ ba: 61 bộ ba mã hóa, 3 bộ ba kết thúc (UAA, UAG, UGA). Bộ ba mở đầu là AUG (mã hóa Metionin ở sinh vật nhân thực).</p>
+                <p><b>- Nhân đôi DNA:</b> Diễn ra theo nguyên tắc bổ sung (A-T, G-C) và nguyên tắc bán bảo toàn (một mạch cũ, một mạch mới).</p>
+            </div>
+            <div class="card">
+                <h2>2. Phiên Mã và Dịch Mã</h2>
+                <p><b>- Phiên mã:</b> Tổng hợp RNA từ khuôn DNA (mạch gốc 3' -> 5'). Enzyme chính: RNA polymerase.</p>
+                <p><b>- Dịch mã:</b> Tổng hợp chuỗi polypeptide (protein) dựa trên thông tin mRNA tại ribosome.</p>
+            </div>
+            <div class="card">
+                <h2>3. Đột Biến Gen & Quy Luật Mendel</h2>
+                <p><b>- Đột biến gen:</b> Những biến đổi trong cấu trúc của gen (mất, thêm, thay thế cặp nucleotide).</p>
+                <p><b>- Quy luật Phân li:</b> Mỗi tính trạng do một cặp allele quy định. Khi giảm phân, các allele phân li đồng đều về các giao tử.</p>
+                <p><b>- Quy luật Phân li độc lập:</b> Các cặp allele phân li độc lập với nhau trong quá trình hình thành giao tử.</p>
+            </div>
+        </div>
+
+        <!-- CÂU HỎI TRẮC NGHIỆM -->
+        <div id="quiz" class="tab-content">
+            <div id="resultBox" class="result-box"></div>
+            
+            <form id="quizForm">
+                <!-- Phần 1: Nhiều lựa chọn -->
+                <div class="card">
+                    <h2>Phần I: Câu Hỏi Trắc Nghiệm (Nhiều Lựa Chọn)</h2>
+                    <div id="mcq-container"></div>
+                </div>
+
+                <!-- Phần 2: Đúng / Sai -->
+                <div class="card">
+                    <h2>Phần II: Câu Hỏi Đúng / Sai</h2>
+                    <div id="tf-container"></div>
+                </div>
+
+                <!-- Phần 3: Trả lời ngắn -->
+                <div class="card">
+                    <h2>Phần III: Câu Hỏi Trả Lời Ngắn</h2>
+                    <div id="sa-container"></div>
+                </div>
+
+                <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Nộp Bài</button>
+                <button type="button" class="btn-reset" id="resetBtn" onclick="resetQuiz()">Làm Lai Bài</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu câu hỏi
+        const mcqData = [
+            { q: "Mã di truyền có tính đặc hiệu, nghĩa là:", options: ["Nhiều bộ ba cùng mã hóa cho một amino acid", "Một bộ ba chỉ mã hóa cho một loại amino acid", "Tất cả các loài đều dùng chung một bộ mã", "Mã di truyền được đọc liên tục từ một điểm xác định"], ans: 1, exp: "Tính đặc hiệu: 1 bộ ba chỉ mã hóa cho 1 loại amino acid." },
+            { q: "Bộ ba nào sau đây là bộ ba mở đầu trên mRNA?", options: ["UAA", "UAG", "UGA", "AUG"], ans: 3, exp: "AUG là bộ ba mở đầu quy định amino acid Metionin." },
+            { q: "Quá trình nhân đôi DNA được thực hiện theo nguyên tắc nào?", options: ["Bổ sung và bán bảo toàn", "Bổ sung và bảo toàn", "Bán bảo toàn và gián đoạn", "Mạch liên tục và mạch gián đoạn"], ans: 0, exp: "Nhân đôi DNA theo nguyên tắc bổ sung và bán bảo toàn (giữ lại 1 mạch cũ)." },
+            { q: "Enzyme chính tham gia vào quá trình phiên mã là:", options: ["DNA polymerase", "RNA polymerase", "Ligase", "Helicase"], ans: 1, exp: "RNA polymerase chịu trách nhiệm tổng hợp mạch RNA từ khuôn DNA." },
+            { q: "Trong tế bào, quá trình dịch mã diễn ra tại đâu?", options: ["Trong nhân", "Tại Ribosome", "Tại Ty thể", "Trên màng tế bào"], ans: 1, exp: "Ribosome là nhà máy tổng hợp chuỗi polypeptide (dịch mã) trong tế bào chất." },
+            { q: "Đột biến gen là những biến đổi xảy ra ở cấp độ:", options: ["Phân tử", "Tế bào", "Cơ thể", "Quần thể"], ans: 0, exp: "Đột biến gen xảy ra ở cấu trúc DNA nên thuộc cấp độ phân tử." },
+            { q: "Dạng đột biến gen nào sau đây KHÔNG làm thay đổi số lượng nucleotide của gen?", options: ["Mất một cặp nucleotide", "Thêm một cặp nucleotide", "Thay thế một cặp nucleotide", "Mất hai cặp nucleotide"], ans: 2, exp: "Thay thế 1 cặp này bằng 1 cặp khác giữ nguyên tổng số nucleotide." },
+            { q: "Theo Mendel, phép mọc giữa hai cơ thể bố mẹ thuần chủng khác nhau về một cặp tính trạng tương phản gọi là:", options: ["Lai phân tích", "Lai một cặp tính trạng", "Lai hai cặp tính trạng", "Phép lai thuận nghịch"], ans: 1, exp: "Lai một cặp tính trạng khảo sát sự di truyền của 1 cặp tính trạng duy nhất." },
+            { q: "Cơ thể có kiểu gen AaBb khi giảm phân bình thường cho tối đa bao nhiêu loại giao tử?", options: ["2", "4", "6", "8"], ans: 1, exp: "Công thức loại giao tử: 2^n = 2^2 = 4 loại giao tử (AB, Ab, aB, ab)." },
+            { q: "Hiện tượng một gen tác động đến sự biểu hiện của nhiều tính trạng khác nhau gọi là:", options: ["Gen đa hiệu", "Tương tác gen", "Liên kết gen", "Hoán vị gen"], ans: 0, exp: "Gen đa hiệu là trường hợp 1 gen chi phối nhiều tính trạng." },
+            { q: "Ở người, bệnh nào sau đây do đột biến gen di truyền gây ra?", options: ["Hội chứng Down", "Bệnh máu khó đông", "Hội chứng Turner", "Hội chứng Klinefelter"], ans: 1, exp: "Máu khó đông do đột biến gen lặn nằm trên nhiễm sắc thể X." },
+            { q: "Phân tử RNA nào đóng vai trò vận chuyển amino acid trong quá trình dịch mã?", options: ["mRNA", "tRNA", "rRNA", "snRNA"], ans: 1, exp: "tRNA (RNA vận chuyển) mang amino acid tới ribosome." },
+            { q: "Một đoạn mạch gốc DNA có trình tự 3'... ATG-TAX ...5'. Trình tự mRNA tương ứng là:", options: ["5'... UAX-AUG ...3'", "5'... UAX-AUGA ...3'", "3'... UAX-AUG ...5'", "5'... TAX-ATG ...3'"], ans: 0, exp: "Phiên mã theo nguyên tắc bổ sung: A-U, T-A, G-C, X-G." },
+            { q: "Quá trình tự nhân đôi DNA xảy ra ở kỳ nào của chu kỳ tế bào?", options: ["Kỳ trung gian (Pha S)", "Kỳ đầu", "Kỳ giữa", "Kỳ sau"], ans: 0, exp: "DNA nhân đôi tại pha S của Kỳ trung gian." },
+            { q: "Đột biến thay thế 1 cặp nucleotide làm cho codon mã hóa amino acid trở thành codon kết thúc thì chuỗi protein sẽ:", options: ["Bị ngắn lại", "Dài hơn", "Không đổi", "Biến đổi hoàn toàn"], ans: 0, exp: "Xuất hiện codon kết thúc sớm làm quá trình dịch mã dừng lại, protein bị ngắn." }
+        ];
+
+        const tfData = [
+            { q: "Khi nói về quá trình nhân đôi DNA, các phát biểu sau đây Đúng hay Sai?", 
+              items: [
+                { text: "Enzyme DNA polymerase lắp ráp nucleotide theo chiều 5' -> 3'.", ans: true },
+                { text: "Mạch mới luôn được tổng hợp liên tục trên cả hai mạch khuôn.", ans: false },
+                { text: "Quá trình nhân đôi diễn ra theo nguyên tắc bán bảo toàn.", ans: true }
+              ],
+              exp: "Mạch khuôn 5'-3' tổng hợp ngắt quãng (đoạn Okazaki). Mạch khuôn 3'-5' tổng hợp liên tục."
+            },
+            { q: "Khi nói về mã di truyền:", 
+              items: [
+                { text: "Mã di truyền gồm có 64 bộ ba, tất cả đều mã hóa amino acid.", ans: false },
+                { text: "Tính thoái hóa nghĩa là một bộ ba mã hóa cho nhiều amino acid.", ans: false }
+              ],
+              exp: "Có 3 bộ ba kết thúc KHÔNG mã hóa. Tính thoái hóa nghĩa là nhiều bộ ba cùng mã hóa 1 amino acid."
+            }
+        ];
+
+        const saData = [
+            { q: "Một gen có 1200 cặp nucleotide. Số bộ ba mã hóa trên phân tử mRNA được tổng hợp từ gen này là bao nhiêu? (Chỉ điền số)", ans: "400", exp: "Số bộ ba = Tổng số nucleotide / (2 * 3) = 2400 / 6 = 400 bộ ba." },
+            { q: "Ở một loài thực vật, A quy định hạt vàng trội hoàn toàn so với a quy định hạt xanh. Cho cây Aa tự thụ phấn, tỉ lệ kiểu hình hạt vàng thu được ở F1 là bao nhiêu %? (Chỉ điền số, ví dụ: 50)", ans: "75", exp: "Aa x Aa -> 1AA : 2Aa : 1aa. Kiểu hình vàng (A-) chiếm 3/4 = 75%." },
+            { q: "Một loài sinh vật có bộ nhiễm sắc thể lưỡng bội 2n = 24. Số nhiễm sắc thể có trong một tế bào thể một (2n - 1) của loài này là bao nhiêu? (Chỉ điền số)", ans: "23", exp: "Thể một có công thức 2n - 1 = 24 - 1 = 23 NST." }
+        ];
+
+        // Khởi tạo giao diện câu hỏi
+        function initQuiz() {
+            // Render MCQ
+            const mcqContainer = document.getElementById('mcq-container');
+            mcqData.forEach((d, i) => {
+                let html = `<div class="question-box" id="mcq-q${i}">
+                    <div class="question-title">Câu ${i+1}: ${d.q}</div>
+                    <div class="options">`;
+                d.options.forEach((opt, idx) => {
+                    html += `<label><input type="radio" name="mcq_${i}" value="${idx}"> ${opt}</label>`;
+                });
+                html += `</div><div class="explanation" id="mcq-exp-${i}"><b>Giải thích:</b> ${d.exp}</div></div>`;
+                mcqContainer.innerHTML += html;
+            });
+
+            // Render True/False
+            const tfContainer = document.getElementById('tf-container');
+            tfData.forEach((d, i) => {
+                let html = `<div class="question-box" id="tf-q${i}">
+                    <div class="question-title">Câu ${mcqData.length + i + 1}: ${d.q}</div>
+                    <table class="tf-table">
+                        <tr><th>Phát biểu</th><th>Đúng</th><th>Sai</th></tr>`;
+                d.items.forEach((item, idx) => {
+                    html += `<tr>
+                        <td>${item.text}</td>
+                        <td><input type="radio" name="tf_${i}_${idx}" value="true"></td>
+                        <td><input type="radio" name="tf_${i}_${idx}" value="false"></td>
+                    </tr>`;
+                });
+                html += `</table><div class="explanation" id="tf-exp-${i}"><b>Giải thích:</b> ${d.exp}</div></div>`;
+                tfContainer.innerHTML += html;
+            });
+
+            // Render Short Answer
+            const saContainer = document.getElementById('sa-container');
+            const startIndex = mcqData.length + tfData.length;
+            saData.forEach((d, i) => {
+                let html = `<div class="question-box" id="sa-q${i}">
+                    <div class="question-title">Câu ${startIndex + i + 1}: ${d.q}</div>
+                    <input type="text" name="sa_${i}" placeholder="Nhập đáp án của bạn...">
+                    <div class="explanation" id="sa-exp-${i}"><b>Đáp án đúng:</b> ${d.ans}. <br><b>Giải thích:</b> ${d.exp}</div>
+                </div>`;
+                saContainer.innerHTML += html;
+            });
+        }
+
+        // Đổi tab
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Chấm điểm
+        function gradeQuiz() {
+            let score = 0;
+            let totalQuestions = mcqData.length + tfData.length + saData.length;
+
+            // Chấm MCQ
+            mcqData.forEach((d, i) => {
+                const selected = document.querySelector(`input[name="mcq_${i}"]:checked`);
+                const expEl = document.getElementById(`mcq-exp-${i}`);
+                expEl.style.display = 'block';
+                if (selected && parseInt(selected.value) === d.ans) {
+                    score++;
+                    expEl.classList.add('correct');
+                } else {
+                    expEl.classList.add('incorrect');
+                }
+            });
+
+            // Chấm True/False
+            tfData.forEach((d, i) => {
+                let allCorrect = true;
+                d.items.forEach((item, idx) => {
+                    const selected = document.querySelector(`input[name="tf_${i}_${idx}"]:checked`);
+                    if (!selected || (selected.value === 'true') !== item.ans) {
+                        allCorrect = false;
+                    }
+                });
+                const expEl = document.getElementById(`tf-exp-${i}`);
+                expEl.style.display = 'block';
+                if (allCorrect) {
+                    score++;
+                    expEl.classList.add('correct');
+                } else {
+                    expEl.classList.add('incorrect');
+                }
+            });
+
+            // Chấm Short Answer
+            saData.forEach((d, i) => {
+                const input = document.querySelector(`input[name="sa_${i}"]`);
+                const expEl = document.getElementById(`sa-exp-${i}`);
+                expEl.style.display = 'block';
+                if (input && input.value.trim().toLowerCase() === d.ans.toLowerCase()) {
+                    score++;
+                    expEl.classList.add('correct');
+                } else {
+                    expEl.classList.add('incorrect');
+                }
+            });
+
+            // Hiển thị kết quả
+            const finalScore = (score / totalQuestions * 10).toFixed(1);
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `Điểm của bạn: <span style="color: var(--primary); font-size: 1.5rem;">${finalScore}/10</span> (${score}/${totalQuestions} câu đúng)`;
+            resultBox.style.backgroundColor = finalScore >= 5 ? '#e8f5e9' : '#ffebee';
+
+            // Ẩn/Hiện nút
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('resetBtn').style.display = 'block';
+
+            // Cuộn lên đầu trang kết quả
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Làm lại bài
+        function resetQuiz() {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation').forEach(el => {
+                el.style.display = 'none';
+                el.classList.remove('correct', 'incorrect');
+            });
+            document.getElementById('resultBox').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('resetBtn').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Chạy khởi tạo khi tải trang
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
