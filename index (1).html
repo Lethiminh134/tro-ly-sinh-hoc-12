@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đề 3 - Thi thử lớp 12 - Mã đề 1101</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6fb;color:#172033}
+header{background:linear-gradient(135deg,#123c78,#1967b3);color:#fff;padding:22px 18px;position:sticky;top:0;z-index:10;box-shadow:0 3px 12px #0002}
+.wrap{max-width:1100px;margin:auto}.title{text-align:center}.title h1{font-size:22px;margin:0 0 6px}.title p{margin:4px 0;font-size:14px}
+.card{background:#fff;border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 3px 15px #102a4d12}
+input[type=text]{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:9px;font-size:16px}
+button{border:0;border-radius:9px;padding:11px 17px;font-weight:700;cursor:pointer}.primary{background:#1769aa;color:#fff}.danger{background:#d83a3a;color:#fff}.ghost{background:#eaf1f8;color:#174b78}
+.start{max-width:600px;margin:50px auto}.section{font-size:20px;font-weight:800;color:#154d83;border-left:5px solid #1769aa;padding-left:10px}
+.q{border:1px solid #e0e7f0;border-radius:12px;padding:18px;margin:15px 0}.q h3{margin:0 0 12px;font-size:16px}.opt{display:block;padding:10px 12px;border-radius:8px;margin:7px 0;background:#f7f9fc;cursor:pointer}.opt:hover{background:#eef5fc}
+.progress{height:8px;background:#dce5ef;border-radius:10px;overflow:hidden;margin-top:10px}.bar{height:100%;background:#42b883;width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.timer{font-size:18px;font-weight:800;background:#fff2;color:#fff;padding:7px 12px;border-radius:8px}
+.nav{display:flex;flex-wrap:wrap;gap:6px}.nav button{min-width:36px;padding:8px;background:#e8eef5}.nav button.done{background:#55a86d;color:white}.nav button.current{outline:3px solid #8bc4ef}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}th,td{border:1px solid #cfd8e3;padding:7px;text-align:center}th{background:#eef4f9}
+.result{text-align:center}.score{font-size:42px;font-weight:900;color:#1769aa}.correct{border-left:5px solid #38a169}.wrong{border-left:5px solid #d83a3a}.small{font-size:13px;color:#607086}
+.hidden{display:none}.sticky-submit{position:sticky;bottom:12px;background:#ffffffed;border:1px solid #dde6ef;padding:10px;border-radius:12px;display:flex;justify-content:center}
+@media(max-width:650px){.title h1{font-size:18px}.card{padding:15px}.q{padding:14px}.topbar{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+<div class="wrap">
+<div class="title"><h1>KỲ KHẢO SÁT CHẤT LƯỢNG KẾT HỢP THI THỬ LỚP 12</h1><p>NĂM HỌC 2024 - 2025 (Đợt 2) · Mã đề 1101</p></div>
+</div>
+</header>
+<main class="wrap">
+<section id="start" class="card start">
+<h2>ĐỀ 3 – LÀM BÀI TRỰC TUYẾN</h2>
+<p class="small">Hãy nhập họ tên trước khi bắt đầu. Thời gian làm bài mặc định: <b>50 phút</b>.</p>
+<label><b>Họ và tên học viên</b></label>
+<input id="student" type="text" placeholder="Nhập họ và tên..." autocomplete="name">
+<div style="margin-top:15px"><button class="primary" onclick="startExam()">BẮT ĐẦU LÀM BÀI</button></div>
+</section>
+
+<section id="exam" class="hidden">
+<div class="card">
+<div class="topbar"><b id="studentName"></b><span class="timer">⏱ <span id="timer">50:00</span></span></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="small" id="progressText"></div>
+</div>
+<div class="card">
+<div class="section">PHẦN I. Thí sinh trả lời từ câu 1 đến câu 24. Mỗi câu hỏi thí sinh chỉ chọn một phương án.</div>
+<div id="mc"></div>
+</div>
+<div class="card">
+<div class="section">PHẦN II. Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.</div>
+<div id="tf"></div>
+</div>
+<div class="sticky-submit"><button class="danger" onclick="submitExam()">NỘP BÀI</button></div>
+</section>
+
+<section id="result" class="hidden"></section>
+</main>
+</div>
+
+<script>
+const DATA = {"mc": [["1", "Trong ao nuôi thủy sản, nhóm sinh vật nào sau đây cung cấp oxygen hoà tan?", ["Động vật đáy.", "Động vật phù du.", "Thực vật thuỷ sinh.", "Cá, tôm."]], ["2", "Khi nghiên cứu về ảnh hưởng của khoáng trong khẩu phần ăn đến khối lượng, chiều cao và chiều rộng của ốc bươu sau 4 tháng nuôi vỗ (biết rằng các chỉ tiêu sinh trưởng của ốc bươu là như nhau vào ngày đầu thả nuôi), các nhà khoa học thu được kết quả như sau:", ["Khi bổ sung 7% khoáng vào khẩu phần ăn thì tốc độ sinh trưởng của ốc bươu tăng mạnh hơn khi bổ sung 5%.", "Khi bổ sung 9% khoáng vào khẩu phần ăn thì ốc bươu có khối lượng cao hơn khi bổ sung 3% khoáng.", "Khi bổ sung 3%, 5% khoáng vào khẩu phần ăn thì tốc độ sinh trưởng của ốc bươu không tăng.", "Khi không bổ sung khoáng vào khẩu phần ăn thì ốc bươu sinh trưởng chậm hơn khi có bổ sung khoáng."]], ["3", "Nghiên cứu ảnh hưởng của các loại kích dục tố lên sinh sản của cá đục bạc, các nhà khoa học đã thu được kết quả như sau:", ["Các loại kích dục tố không ảnh hưởng đến tỷ lệ thụ tinh và tỷ lệ nở của cá đục bạc.", "Sử dụng HCG đạt tỷ lệ thụ tinh và tỷ lệ nở cao nhất.", "Sử dụng Ovaprim đạt tỷ lệ thụ tinh và tỷ lệ nở thấp nhất.", "Sử dụng Ovaprim và LHRHa có tỷ lệ thụ tinh và tỷ lệ nở tương đương nhau."]], ["4", "Phương pháp khai thác thủy sản nào sau đây gây ô nhiễm môi trường mạnh nhất?", ["Dùng câu.", "Lưới rê.", "Lưới kéo.", "Thuốc nổ."]], ["5", "Hoạt động nào sau đây không phải là nguyên nhân gây suy thoái tài nguyên rừng?", ["Khai thác quá mức gỗ và các sản phẩm khác từ rừng.", "Giao rừng cho các tổ chức, hộ gia đình, cá nhân quản lý.", "Chuyển đổi diện tích rừng tự nhiên thành nơi chăn thả gia súc.", "Chuyển đổi diện tích rừng tự nhiên sang trồng cây công nghiệp."]], ["6", "Phương pháp nào sau đây có kỹ thuật tách cơ thịt theo chiều dài thân cá, sản phẩm để nguyên miếng hoặc cắt lát?", ["Chế biến tôm chua.", "Chế biến Fillet", "Sản xuất Surimi.", "Chế biến nước mắm."]], ["7", "Bảng dưới đây thể hiện yêu cầu chất lượng nước nơi đặt lồng nuôi cá rô phi. Nên đặt lồng nuôi cá rô phi ở nơi có chất lượng nước đạt thông số nào sau đây?", ["pH 6,5-8,5; tốc độ dòng chảy 0,2-0,3 m/s.", "Oxygen hòa tan < 4 mg/L; ammonia < 1 mg/L.", "Oxygen hòa tan ≥ 4 mg/L; tốc độ dòng chảy 0,5 m/s.", "pH 6,5-8,5; ammonia > 3 mg/L."]], ["8", "Thực phẩm nào sau đây được chế biến từ sản phẩm trồng trọt?", ["Tôm chua.", "Thịt hộp.", "Mít sấy.", "Ruốc bông."]], ["9", "Nhận định nào sau đây không đúng về quy luật sinh trưởng, phát triển của cây rừng?", ["Cây rừng ra hoa, kết quả nhiều nhất ở giai đoạn thành thục.", "Sinh trưởng và phát triển của cây rừng có mối quan hệ chặt chẽ.", "Sinh trưởng của cây rừng chậm dần ở giai đoạn già cỗi.", "Cây rừng sinh trưởng chậm nhất ở giai đoạn gần thành thục."]], ["10", "Cho bảng số liệu về diện tích rừng trồng của nước ta như sau. Nhận định nào sau đây đúng?", ["Diện tích rừng phòng hộ năm 2017 không tăng so với năm 2012.", "So với năm 2012, tổng diện tích rừng năm 2022 tăng 1,4 triệu ha.", "Tổng diện tích rừng của nước ta giảm dần qua các năm.", "Tổng diện tích rừng năm 2022 không thay đổi so với năm 2017."]], ["11", "Vật nuôi nào sau đây thuộc nhóm gia cầm?", ["Dê.", "Vịt.", "Bò.", "Lợn."]], ["12", "Phát biểu nào sau đây đúng với phương thức khai thác dần?", ["Khai thác một lần trên diện rộng.", "Chặt từng phần, tạo điều kiện rừng tái sinh.", "Chỉ chọn chặt cây gỗ quý trong rừng.", "Chặt toàn bộ cây để trồng rừng mới."]], ["13", "Nhận định nào sau đây không đúng về vai trò của thủy sản?", ["Góp phần phát triển kinh tế và tạo việc làm.", "Đảm bảo an ninh lương thực quốc gia.", "Cung cấp thực phẩm giàu dinh dưỡng cho con người.", "Cung cấp nguyên liệu cho chế biến và xuất khẩu."]], ["14", "Trong chăn nuôi lợn, chip đeo tai cung cấp các số liệu liên quan đến vị trí, sức khỏe, trọng lượng. Đây là ví dụ về", ["công nghệ Biogas.", "chăn nuôi công nghệ cao.", "công nghệ gen.", "công nghệ sinh học."]], ["15", "Công nghệ nào sau đây được áp dụng trong hình bên? (Đề gốc có hình minh họa; vui lòng bổ sung hình nếu cần hiển thị trên website.)", ["Công nghệ khí canh.", "Công nghệ tưới phun mưa.", "Công nghệ thuỷ canh.", "Công nghệ tưới nhỏ giọt."]], ["16", "Ngành nào sau đây cung cấp gỗ cho công nghiệp và xây dựng?", ["Thủy sản.", "Lâm nghiệp.", "Trồng trọt.", "Chăn nuôi."]], ["17", "Cần tiến hành thay một phần nước trong ao nuôi tôm thẻ chân trắng khi", ["hàm lượng oxygen hoà tan dưới 2 mg/L.", "hàm lượng oxygen hoà tan cao hơn 4 mg/L.", "nhiệt độ nước ao nuôi khoảng 20°C đến 30°C.", "giá trị pH của ao nuôi dao động từ 7,5 đến 8,0."]], ["18", "Cây rừng sinh trưởng kém do cạnh tranh quá mức về ánh sáng, nước và dinh dưỡng. Biện pháp khắc phục là", ["bón lót.", "xới đất.", "tỉa thưa.", "trồng dặm."]], ["19", "Nhận định nào sau đây đúng về vai trò của phân bón trong trồng trọt?", ["Cung cấp chất dinh dưỡng cho cây trồng.", "Làm thay đổi cấu trúc di truyền của cây.", "Ổn định độ pH cho đất trồng.", "Giúp cây trồng chống lại mọi loại sâu bệnh."]], ["20", "Cám đậu xanh là loại thức ăn", ["giàu protein.", "giàu khoáng.", "giàu vitamin.", "giàu lipid."]], ["21", "Để bảo vệ môi trường trong trồng trọt, việc làm nào sau đây là cần thiết?", ["Tăng cường sử dụng phân hoá học.", "Chôn bao bì đựng thuốc hoá học xuống đất.", "Đốt rơm, rạ ngay tại đồng ruộng.", "Sử dụng phân hữu cơ đã hoai mục."]], ["22", "Phát biểu nào sau đây không đúng khi nói về vai trò của chăn nuôi?", ["Cung cấp nguyên liệu cho các nhà máy chế biến sữa.", "Cung cấp lương thực cho tiêu dùng và xuất khẩu.", "Cung cấp sức kéo và phân bón cho trồng trọt.", "Cung cấp nguồn thực phẩm giàu protein cho con người."]], ["23", "Tại Việt Nam, những loài thủy sản nào sau đây đã được ứng dụng công nghệ chỉ thị phân tử trong chọn giống?", ["Tôm thẻ chân trắng và cá tra.", "Cá chép và cá trôi.", "Cá trắm cỏ và tôm sú.", "Cá rô phi và cá mè."]], ["24", "Động vật thuỷ sản nào sau đây thuộc nhóm thân mềm?", ["Tôm.", "Cá chép.", "Mực ống.", "Ếch đồng."]]], "tf": [["1", "Bệnh đốm trắng nội tạng là bệnh phổ biến trên cá nheo Mỹ nuôi lồng. Tác nhân gây bệnh là sán lá (Dollfustrema bagari). Khi nghiên cứu mối quan hệ giữa độ mặn môi trường nước và thời gian sống của ấu trùng sán lá, các nhà khoa học đã thu được kết quả sau:", ["Trong môi trường nước có độ mặn 20‰, ấu trùng sán lá có thể sống tới 10 tiếng.", "Cần tăng cường phòng bệnh đốm trắng nội tạng cho cá nheo Mỹ khi nuôi trong vùng nước có độ mặn thấp.", "Độ mặn môi trường nước có ảnh hưởng đến thời gian sống của ấu trùng sán lá.", "Độ mặn môi trường nước càng thấp thì thời gian sống của ấu trùng sán lá càng giảm."]], ["2", "Theo Tổng cục Phòng chống thiên tai, mỗi năm nước ta có khoảng 10 đến 15 trận lũ quét, sạt lở đất, đặc biệt là tại các vùng núi phía Bắc, Trung bộ, Tây Nguyên và Đông Nam bộ. Mưa bão ngày càng tăng, trở thành mối đe dọa nguy hại đến cuộc sống con người và nền kinh tế đất nước.", ["Rừng phòng hộ đầu nguồn có vai trò quan trọng trong việc ngăn chặn lũ quét và sạt lở đất.", "Cần kết hợp khoanh nuôi, tái sinh rừng với phát triển du lịch sinh thái tại các khu rừng phòng hộ.", "Rừng tự nhiên sau khi bị khai thác có thể phục hồi hoàn toàn mà không cần sự can thiệp của con người.", "Khai thác rừng không hợp lí là một trong những nguyên nhân dẫn tới lũ quét và sạt lở đất."]], ["3", "Một trang trại nuôi cá trắm cỏ ở gần khu dân cư. Vào mùa mưa, nước thải sinh hoạt chưa qua xử lí từ các hộ dân xung quanh tràn vào ao nuôi. Sau một thời gian thấy cá có hiện tượng thở gấp, bơi lờ đờ, ăn kém.", ["Tăng lượng thức ăn cho cá để nâng cao sức đề kháng.", "Sử dụng phèn nhôm với liều lượng cao để khử trùng nước trong ao nuôi.", "Nước thải sinh hoạt chưa qua xử lí làm ô nhiễm môi trường ao nuôi.", "Nước thải sinh hoạt được xử lí đạt tiêu chuẩn quy định có thể được cấp cho ao nuôi."]], ["4", "Nghiên cứu ảnh hưởng của việc bổ sung Selen vào thức ăn của cá chẽm sau 50 ngày nuôi, thu được kết quả như sau:", ["Việc bổ sung Selen vào thức ăn không ảnh hưởng đến sự sinh trưởng của cá chẽm.", "Cá chẽm có tốc độ sinh trưởng nhanh nhất khi bổ sung Selen 0,5 ppt.", "Tốc độ sinh trưởng của cá chẽm tỷ lệ thuận với nồng độ Selen trong thức ăn.", "Cần bổ sung Selen 0,7 ppt vào thức ăn để cá chẽm có tốc độ sinh trưởng nhanh nhất."]]], "answers_mc": ["C", "D", "B", "D", "B", "B", "A", "C", "D", "B", "B", "B", "B", "B", "C", "B", "A", "C", "A", "A", "D", "B", "A", "C"], "answers_tf": [["F", "T", "T", "F"], ["T", "T", "F", "T"], ["T", "F", "T", "T"], ["F", "T", "F", "F"]]};
+let userMC={}, userTF={}, seconds=50*60, timerId=null, submitted=false;
+const letters=["A","B","C","D"], labels=["a","b","c","d"];
+
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function startExam(){
+ const n=document.getElementById("student").value.trim();
+ if(!n){alert("Vui lòng nhập họ và tên.");return}
+ document.getElementById("start").classList.add("hidden");
+ document.getElementById("exam").classList.remove("hidden");
+ document.getElementById("studentName").textContent="Học viên: "+n;
+ render();
+ timerId=setInterval(()=>{seconds--;updateTimer();if(seconds<=0){clearInterval(timerId);alert("Đã hết thời gian. Bài làm sẽ được nộp tự động.");submitExam(true)}},1000);
+}
+function updateTimer(){let m=Math.floor(seconds/60),s=seconds%60;document.getElementById("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");}
+function render(){
+ document.getElementById("mc").innerHTML=DATA.mc.map(q=>`
+ <div class="q" id="mcq${q[0]}"><h3>Câu ${q[0]}. ${esc(q[1])}</h3>
+ ${q[2].map((o,i)=>`<label class="opt"><input type="radio" name="mc${q[0]}" value="${letters[i]}" onchange="userMC['${q[0]}']='${letters[i]}';updateProgress()"> <b>${letters[i]}.</b> ${esc(o)}</label>`).join("")}</div>`).join("");
+ document.getElementById("tf").innerHTML=DATA.tf.map(q=>`
+ <div class="q" id="tfq${q[0]}"><h3>Câu ${q[0]}. ${esc(q[1])}</h3>
+ ${q[2].map((o,i)=>`<div class="opt"><b>${labels[i]})</b> ${esc(o)}<br>
+ <label><input type="radio" name="tf${q[0]}_${i}" value="T" onchange="setTF('${q[0]}',${i},'T')"> Đúng</label>
+ &nbsp;&nbsp;<label><input type="radio" name="tf${q[0]}_${i}" value="F" onchange="setTF('${q[0]}',${i},'F')"> Sai</label></div>`).join("")}</div>`).join("");
+ updateProgress();
+}
+function setTF(q,i,v){if(!userTF[q])userTF[q]=[];userTF[q][i]=v;updateProgress()}
+function updateProgress(){
+ let done=Object.keys(userMC).length + Object.values(userTF).reduce((a,x)=>a+x.filter(Boolean).length,0);
+ let total=24+16;document.getElementById("bar").style.width=(done/total*100)+"%";
+ document.getElementById("progressText").textContent=`Đã trả lời ${done}/${total} ý/câu lựa chọn`;
+}
+function submitExam(auto=false){
+ if(submitted)return;
+ if(!auto && !confirm("Bạn chắc chắn muốn nộp bài?"))return;
+ submitted=true;clearInterval(timerId);
+ let mcCorrect=0;DATA.mc.forEach((q,i)=>{if(userMC[q[0]]===DATA.answers_mc[i])mcCorrect++});
+ let tfCorrect=0;DATA.tf.forEach((q,i)=>{q[2].forEach((_,j)=>{if(userTF[q[0]]?.[j]===DATA.answers_tf[i][j])tfCorrect++})});
+ // Score convention: 24 MC + 16 T/F items, 40 objective units -> 10-point scale.
+ let score=((mcCorrect+tfCorrect)/40*10).toFixed(2);
+ let used=50*60-seconds;let um=Math.floor(used/60),us=used%60;
+ let html=`<div class="card result"><h2>KẾT QUẢ LÀM BÀI</h2><p><b>Học viên:</b> ${esc(document.getElementById("student").value.trim())}</p><div class="score">${score}/10</div><p>Đúng <b>${mcCorrect+tfCorrect}/40</b> đơn vị chấm · Thời gian: <b>${um} phút ${us} giây</b></p>
+ <button class="primary" onclick="location.reload()">LÀM LẠI</button></div>
+ <div class="card"><h3>PHẦN I – Trắc nghiệm</h3>${DATA.mc.map((q,i)=>{let u=userMC[q[0]]||"Chưa chọn",c=DATA.answers_mc[i],ok=u===c;return `<div class="q ${ok?'correct':'wrong'}"><b>Câu ${q[0]}</b> — Bạn chọn: <b>${u}</b> · Đáp án đúng: <b>${c}</b> — ${ok?'ĐÚNG':'SAI'}</div>`}).join("")}</div>
+ <div class="card"><h3>PHẦN II – Đúng/Sai</h3>${DATA.tf.map((q,i)=>`<div class="q"><b>Câu ${q[0]}</b>${q[2].map((_,j)=>{let u=userTF[q[0]]?.[j]||"Chưa chọn",c=DATA.answers_tf[i][j],ok=u===c;return `<div class="${ok?'correct':'wrong'}" style="padding:8px;margin:5px 0">${labels[j]}) Bạn chọn: <b>${u}</b> · Đáp án: <b>${c==='T'?'Đúng':'Sai'}</b> — ${ok?'ĐÚNG':'SAI'}</div>`}).join("")}</div>`).join("")}</div>`;
+ document.getElementById("exam").classList.add("hidden");document.getElementById("result").innerHTML=html;document.getElementById("result").classList.remove("hidden");window.scrollTo(0,0);
+}
+</script>
+</body></html>
